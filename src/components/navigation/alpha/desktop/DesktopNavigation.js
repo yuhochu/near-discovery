@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Logo } from "../icons/Logo";
+import { ShanShanLogo } from "../icons/Logo";
 import { Return } from "../icons/Return";
 import { NavigationButton } from "../NavigationButton";
 import { SignInButton } from "../SignInButton";
@@ -111,9 +111,7 @@ export function DesktopNavigation(props) {
   return (
     <StyledNavigation onMouseLeave={() => setMenuDropdown(false)}>
       <div className="container">
-        <Link to="/" className="logo-link">
-          <Logo />
-        </Link>
+        <ShanShanLogo />
         <div className="form-wrapper">
           <form
             onSubmit={(e) => {
