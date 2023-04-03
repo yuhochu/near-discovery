@@ -55,6 +55,7 @@ export default function ViewPage(props) {
               targetProps: widgetProps,
               targetComponent: src,
               tosName: props.tos.contentComponentPath,
+              requestSignIn: props.requestSignIn,
             }}
           />{' '}
         </div>
