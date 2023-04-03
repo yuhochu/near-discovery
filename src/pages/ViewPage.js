@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Widget } from "near-social-vm";
-import { useParams } from "react-router-dom";
-import { useQuery } from "../hooks/useQuery";
+import React, { useEffect, useState } from 'react';
+import { Widget } from 'near-social-vm';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '../hooks/useQuery';
 
 export default function ViewPage(props) {
   const { widgetSrc } = useParams();
@@ -13,15 +13,15 @@ export default function ViewPage(props) {
   const viewSourceWidget = props.widgets.viewSource;
 
   useEffect(() => {
-    setWidgetProps(Object.fromEntries([...query.entries()]));
+    setWidgetProps({ ...Object.fromEntries([...query.entries()]), requestSignIn: props.requestSignIn });
   }, [query]);
 
   useEffect(() => {
     setTimeout(() => {
       setWidgetSrc(
-        src === viewSourceWidget && query.get("src")
+        src === viewSourceWidget && query.get('src')
           ? {
-              edit: query.get("src"),
+              edit: query.get('src'),
               view: null,
             }
           : {
@@ -29,7 +29,7 @@ export default function ViewPage(props) {
               view: src,
             }
       );
-      analytics("view", {
+      analytics('view', {
         props: {
           widget: src,
         },
@@ -38,13 +38,13 @@ export default function ViewPage(props) {
   }, [src, query, setWidgetSrc, viewSourceWidget]);
 
   return (
-    <div className="container-xl">
-      <div className="row">
+    <div className='container-xl'>
+      <div className='row'>
         <div
-          className="d-inline-block position-relative overflow-hidden"
+          className='d-inline-block position-relative overflow-hidden'
           style={{
             // "--body-top-padding": "24px",
-            paddingTop: "var(--body-top-padding)",
+            paddingTop: 'var(--body-top-padding)',
           }}
         >
           <Widget
@@ -56,7 +56,7 @@ export default function ViewPage(props) {
               targetComponent: src,
               tosName: props.tos.contentComponentPath,
             }}
-          />{" "}
+          />{' '}
         </div>
       </div>
     </div>
