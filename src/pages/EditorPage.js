@@ -778,22 +778,35 @@ export default function EditorPage(props) {
       fontSize: '14px',
       height: "40px",
       cursor:"pointer",
+      marginRight:"20px"
     }}>
       Add
-      <i className="bi bi-plus" style={{fontSize:'20px', fontWeight: '500',marginLeft:'5px'}}></i>
+      <i className="bi bi-plus" style={{fontSize:'20px', fontWeight: '500'}}></i>
     </div>
   );
 
   const renameButton = (
-    <button
-      className="btn btn-outline-success ms-2"
-      style={{ height: "40px" }}
-      onClick={() => {
-        setShowRenameModal(true);
-      }}
-    >
-      <i className="bi bi-pen"></i>
-    </button>
+    // <button
+    //   className="btn btn-outline-success ms-2"
+    //   style={{ height: "40px" }}
+    //   onClick={() => {
+    //     setShowRenameModal(true);
+    //   }}
+    // >
+    //   <i className="bi bi-pen"></i>
+    // </button>
+    <div onClick={() => setShowRenameModal(true)} style={{
+      display:'flex',
+      alignItems:'center',
+      color:'#fff',
+      fontWeight: '500',
+      fontSize: '14px',
+      height: "40px",
+      cursor:"pointer",
+    }}>
+      Edit
+      <i className="bi bi-pen" style={{fontSize:'12px', fontWeight: '500',marginLeft:'5px'}}></i>
+    </div>
   );
 
   const openInNewTabButton = (
@@ -970,9 +983,9 @@ export default function EditorPage(props) {
                         </Nav.Item>
                       );
                     })}
-                    <Nav.Item className="me-1">
+                    <Nav.Item className="me-1" style={{display:'flex', alignItems:'center'}}>
                       {openCreateButton}
-                      {/* {renameButton} */}
+                      {renameButton}
                     </Nav.Item>
                   </Nav>
                 </div>
