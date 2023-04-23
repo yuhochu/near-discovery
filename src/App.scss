@@ -43,3 +43,39 @@ a {
     justify-content: center !important;
   }
 }
+
+// modal css
+.modal-content{
+  background: #1A2E33;
+  .modal-header{
+    color:#fff;
+    border-bottom:1px solid rgba(255, 255, 255, 0);
+    .btn-close{
+      opacity: 1;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAGxJREFUKFOdkkERgDAMBDc/JCADGchABnKQgSQk8DsmDGVgkk/aZy/bbNqapAmYgc3MDpIlaQQWYDdJKzAAZwZ9iu8aBxodoDRzgyx4zFzjd5A15QTyKHR9gaSTb4W5+oGSUmno8rX2PFzpa1zdkmd7nNj79AAAAABJRU5ErkJggg==') center center no-repeat;
+    }
+  }
+  .modal-body {
+    color:#fff;
+    input{
+      background: rgba(26, 46, 51, 0.25);
+      border: 0.5px solid rgba(255, 255, 255, 0.3);
+      color:#fff;
+      &:focus{
+        box-shadow: none;
+      }
+    }
+  }
+  .modal-footer{
+    border-top:1px solid rgba(255, 255, 255, 0);
+    .btn-green, .btn-success{
+      background-color:#00FFD1;
+      color:#101011;
+    }
+    .btn-cancel, .btn-secondary{
+      background: rgba(26, 46, 51, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color:#fff;
+    }
+  }
+}

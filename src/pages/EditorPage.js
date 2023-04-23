@@ -26,14 +26,16 @@ const TopMenu = styled.div`
   color: #11181c;
   height: 40px;
 
-  &&& > a.active {
-    border: 1px solid #ced4da;
+  &&& > a.active .tabName{
+    border-bottom:4px solid #00FFD1;
+    height:36px;
   }
   &&& > a {
-    background: #fff;
-    color: #11181c;
+    background: transparent;
+    color: #fff;
     padding-left: 6px;
     padding-right: 6px;
+    margin-right:5px;
   }
 
   .draft {
@@ -62,6 +64,53 @@ const TopMenu = styled.div`
     height: 28px;
   }
 `;
+const Container = styled.div`
+.nav-item{
+  margin-right:3px;
+}
+.nav-tabs{
+  position:relative;
+  top:1px;
+}
+.nav-tabs .nav-link{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: none;
+}
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+  background-color:transparent;
+  color:#fff;
+  border:1px solid rgba(255, 255, 255, 0.3);
+  border-bottom:none;
+}
+.nav-tabs .nav-link.active{
+  background-color:#101b1f;
+} 
+.nav-tabs .nav-link:hover{
+  border:1px solid rgba(255, 255, 255, 0.3);
+  border-bottom:none;
+}
+.form-control{
+  background-color:transparent;
+  border:none;
+}
+.btn-custom-primary{
+  background: rgba(26, 46, 51, 0.25);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color:#fff;
+}
+
+.button-c{
+  color:#fff;
+  .btn{
+    border:0.5px solid rgba(255, 255, 255, 0.3);
+    color:#fff;
+  }
+}
+`
 
 const StorageDomain = {
   page: "editor",
@@ -631,7 +680,7 @@ export default function EditorPage(props) {
 
   const publishDraftAsMainButton = (
     <CommitButton
-      className={`btn btn-primary`}
+      className={`btn btn-custom-primary`}
       disabled={!widgetName}
       near={near}
       data={{
@@ -655,7 +704,7 @@ export default function EditorPage(props) {
 
   const saveDraftButton = (
     <button
-      className="btn btn-outline-primary me-2"
+      className="btn btn-custom-primary me-2"
       disabled={!widgetName}
       onClick={(e) => {
         e.preventDefault();
@@ -668,7 +717,7 @@ export default function EditorPage(props) {
 
   const publishButton = (
     <CommitButton
-      className={`btn btn-primary`}
+      className={`btn btn-custom-primary`}
       disabled={!widgetName}
       near={near}
       data={{
@@ -699,19 +748,31 @@ export default function EditorPage(props) {
   );
 
   const openCreateButton = (
-    <button
-      className="btn btn-success ms-2"
-      onClick={() => setShowAddModal(true)}
-      style={{
-        fontSize: "20px",
-        height: "40px",
-        lineHeight: "38px",
-        paddingTop: "0",
-        marginTop: "0",
-      }}
-    >
-      <i className="bi bi-plus"></i>
-    </button>
+    // <button
+    //   className="btn btn-success ms-2"
+    //   onClick={() => setShowAddModal(true)}
+    //   style={{
+    //     fontSize: "20px",
+    //     height: "40px",
+    //     lineHeight: "38px",
+    //     paddingTop: "0",
+    //     marginTop: "0",
+    //   }}
+    // >
+    //   <i className="bi bi-plus"></i>
+    // </button>
+    <div onClick={() => setShowAddModal(true)} style={{
+      display:'flex',
+      alignItems:'center',
+      color:'#fff',
+      fontWeight: '500',
+      fontSize: '14px',
+      height: "40px",
+      cursor:"pointer",
+    }}>
+      Add
+      <i className="bi bi-plus" style={{fontSize:'20px', fontWeight: '500',marginLeft:'5px'}}></i>
+    </div>
   );
 
   const renameButton = (
@@ -740,7 +801,7 @@ export default function EditorPage(props) {
 
   const forkButton = (
     <button
-      className="btn btn-outline-primary me-2"
+      className="btn btn-custom-primary me-2"
       onClick={() => {
         const forkName = widgetName + "-fork";
         openFile(toPath(Filetype.Widget, forkName), code);
@@ -751,7 +812,9 @@ export default function EditorPage(props) {
   );
 
   const showEditor = !(files?.length === 1 && files[0]?.unnamed === true);
-
+  const OpenButtonIcon =  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.09411 0.4668C3.48623 2.66122 1.87845 4.85542 0.270465 7.04958C-0.301894 7.83094 0.233009 8.95701 1.17669 8.95701H10.8236C11.7672 8.95701 12.3022 7.83094 11.7295 7.04958C10.1219 4.85542 8.51384 2.66126 6.90606 0.4668C6.44999 -0.1556 5.55032 -0.1556 5.09411 0.4668ZM0.751334 11.9861H10.3913C10.7746 11.9861 11.5722 12.1064 11.8719 11.6394C12.2055 11.12 11.8486 10.4239 11.2489 10.4239H1.60899C1.22547 10.4239 0.428086 10.3038 0.127975 10.7709C-0.205466 11.29 0.151429 11.9861 0.751334 11.9861Z" fill="white"/>
+  </svg>;
   return (
     <>
       <div
@@ -765,7 +828,7 @@ export default function EditorPage(props) {
             width: "460px",
           }}
         >
-          <h4 style={{ lineHeight: "50px" }}>
+          <h4 style={{ lineHeight: "50px" }} class="text-secondary">
             Welcome to the Component Sandbox!
           </h4>
           <p className="text-secondary">
@@ -795,511 +858,519 @@ export default function EditorPage(props) {
           </div>
         </div>
       </div>
-      <div className={showEditor ? `` : `visually-hidden`}>
-        <VsCodeBanner />
+      <Container>
+        <div className={showEditor ? `` : `visually-hidden`}>
+          {/* <VsCodeBanner /> */}
 
-        <div className="container-fluid mt-1">
-          <RenameModal
-            key={`rename-modal-${jpath}`}
-            show={showRenameModal}
-            name={path?.name}
-            onRename={(newName) => renameFile(newName, code)}
-            onHide={() => setShowRenameModal(false)}
-          />
-          <OpenModal
-            show={showOpenModal}
-            onOpen={(newName) => loadFile(newName)}
-            onHide={() => setShowOpenModal(false)}
-          />
-          <AddModal
-            show={showAddModal}
-            onOpen={() => (setShowAddModal(false), setShowOpenModal(true))}
-            onNew={() => (
-              setShowAddModal(false),
-              setShowRenameModal(true),
-              createNewFile(Filetype.Widget)
-            )}
-            onHide={() => setShowAddModal(false)}
-          />
-          <CreateModal
-            show={showCreateModal}
-            onOpen={(newName) => loadFile(newName)}
-            onNew={() => {
-              createNewFile(Filetype.Widget);
-            }}
-            onHide={() => setShowCreateModal(false)}
-          />
-          <SaveDraftModal
-            show={showSaveDraftModal}
-            onHide={() => setShowSaveDraftModal(false)}
-            near={near}
-            widgetPath={widgetPath}
-            widgetName={widgetName}
-            code={code}
-            metadata={metadata}
-          />
-          <div className="">
-            <div className="w-100 d-flex " style={{ flexWrap: "nowrap" }}>
-              <div className="d-flex" style={{ flexWrap: "wrap" }}>
-                <Nav
-                  variant="pills mb-2 mt-2"
-                  activeKey={jpath}
-                  onSelect={(key) => openFile(JSON.parse(key))}
-                >
-                  {files?.map((p, idx) => {
-                    if (p.unnamed) {
-                      return;
-                    }
-
-                    const jp = JSON.stringify(p);
-                    const widgetName = p?.name?.split("/")[0];
-                    const { codeChangesPresent, isDraft } =
-                      filesDetails.get(widgetName) || {};
-
-                    return (
-                      <Nav.Item key={jp}>
-                        <TopMenu>
-                          <Nav.Link
-                            className="text-decoration-none d-flex "
-                            eventKey={jp}
-                          >
-                            <div className="d-flex">
-                              {/* X1 */}
-                              {isDraft && <div className="draft">Draft</div>}
-                              <div>{widgetName}</div>
-                              {codeChangesPresent && (
-                                <div className="dot"></div>
-                              )}
-                            </div>
-                            <button
-                              className={`close btn btn-lg border-0 py-0 px-1 ms-1 rounded-circle btn-outline-secondary`}
-                              style={{
-                                marginTop: "-3px",
-                                marginBottom: "0px",
-                              }}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                removeFromFiles(p);
-                                if (jp === jpath) {
-                                  if (files.length > 1) {
-                                    openFile(files[idx - 1] || files[idx + 1]);
-                                  } else {
-                                    createFile(Filetype.Widget);
-                                  }
-                                }
-                              }}
-                            >
-                              <i className="bi bi-x"></i>
-                            </button>
-                          </Nav.Link>
-                        </TopMenu>
-                      </Nav.Item>
-                    );
-                  })}
-                  <Nav.Item className="me-1">
-                    {openCreateButton}
-                    {renameButton}
-                  </Nav.Item>
-                </Nav>
-              </div>
-              <div
-                className="d-flex ms-auto"
-                style={{ minWidth: "280px", flexWrap: "wrap" }}
-              >
-                <Nav
-                  variant="pills mb-2 mt-2 ms-auto"
-                  activeKey={jpath}
-                  onSelect={(key) => openFile(JSON.parse(key))}
-                >
-                  <Nav.Item className="">
-                    {saveDraftButton}
-                    {forkButton}
-
-                    {filesDetails.get(widgetName)?.isDraft
-                      ? publishDraftAsMainButton
-                      : publishButton}
-                  </Nav.Item>
-                </Nav>
-              </div>
-            </div>
-
-            {props.widgets.editorComponentSearch && (
-              <div>
-                {/* We use the component search widget as a VM entry point to add a TOS check wrapper.
-                It does not need to be this component, just some <Widget /> on the page */}
-                <Widget
-                  src={props.tos.checkComponentPath}
-                  props={{
-                    logOut: props.logOut,
-                    tosName: props.tos.contentComponentPath,
-                    targetComponent: props.widgets.editorComponentSearch,
-                    targetProps: useMemo(
-                      () => ({
-                        extraButtons: ({ widgetName, widgetPath, onHide }) => (
-                          <OverlayTrigger
-                            placement="auto"
-                            overlay={
-                              <Tooltip>
-                                Open "{widgetName}" component in the editor
-                              </Tooltip>
-                            }
-                          >
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                loadFile(widgetPath);
-                                onHide && onHide();
-                              }}
-                            >
-                              Open
-                            </button>
-                          </OverlayTrigger>
-                        ),
-                      }),
-                      [loadFile]
-                    ),
-                  }}
-                />
-              </div>
-            )}
-          </div>
-          <div className="d-flex align-content-start">
-            <div className="flex-grow-1">
-              <div className="row">
-                <div className={layoutClass}>
-                  <div
-                    style={{
-                      display: "flex",
-                    }}
+          <div className="container-fluid mt-1">
+            <RenameModal
+              key={`rename-modal-${jpath}`}
+              show={showRenameModal}
+              name={path?.name}
+              onRename={(newName) => renameFile(newName, code)}
+              onHide={() => setShowRenameModal(false)}
+            />
+            <OpenModal
+              show={showOpenModal}
+              onOpen={(newName) => loadFile(newName)}
+              onHide={() => setShowOpenModal(false)}
+            />
+            <AddModal
+              show={showAddModal}
+              onOpen={() => (setShowAddModal(false), setShowOpenModal(true))}
+              onNew={() => (
+                setShowAddModal(false),
+                setShowRenameModal(true),
+                createNewFile(Filetype.Widget)
+              )}
+              onHide={() => setShowAddModal(false)}
+            />
+            <CreateModal
+              show={showCreateModal}
+              onOpen={(newName) => loadFile(newName)}
+              onNew={() => {
+                createNewFile(Filetype.Widget);
+              }}
+              onHide={() => setShowCreateModal(false)}
+            />
+            <SaveDraftModal
+              show={showSaveDraftModal}
+              onHide={() => setShowSaveDraftModal(false)}
+              near={near}
+              widgetPath={widgetPath}
+              widgetName={widgetName}
+              code={code}
+              metadata={metadata}
+            />
+            <div className="">
+              <div className="w-100 d-flex " style={{ flexWrap: "nowrap" }}>
+                <div className="d-flex" style={{ flexWrap: "wrap" }}>
+                  <Nav
+                    variant="pills mb-2 mt-2"
+                    activeKey={jpath}
+                    onSelect={(key) => openFile(JSON.parse(key))}
                   >
-                    <div>
-                      <ul
-                        className={`nav nav-tabs`}
-                        style={{
-                          borderBottom: "0px",
-                          marginTop: "9px",
-                        }}
-                      >
-                        <li className="nav-item">
-                          <button
-                            className={`nav-link ${
-                              tab === Tab.Editor ? "active" : "text-secondary"
-                            }`}
-                            aria-current="page"
-                            onClick={() => setTab(Tab.Editor)}
-                          >
-                            Component
-                          </button>
-                        </li>
-                        <li className="nav-item">
-                          <button
-                            className={`nav-link ${
-                              tab === Tab.Props ? "active" : "text-secondary"
-                            }`}
-                            aria-current="page"
-                            onClick={() => setTab(Tab.Props)}
-                          >
-                            Props
-                          </button>
-                        </li>
-                        {props.widgets.widgetMetadataEditor && (
-                          <li className="nav-item">
-                            <button
-                              className={`nav-link ${
-                                tab === Tab.Metadata
-                                  ? "active"
-                                  : "text-secondary"
-                              }`}
-                              aria-current="page"
-                              onClick={() => setTab(Tab.Metadata)}
+                    {files?.map((p, idx) => {
+                      if (p.unnamed) {
+                        return;
+                      }
+
+                      const jp = JSON.stringify(p);
+                      const widgetName = p?.name?.split("/")[0];
+                      const { codeChangesPresent, isDraft } =
+                        filesDetails.get(widgetName) || {};
+
+                      return (
+                        <Nav.Item key={jp}>
+                          <TopMenu>
+                            <Nav.Link
+                              className="text-decoration-none d-flex "
+                              eventKey={jp}
                             >
-                              Metadata
-                            </button>
-                          </li>
-                        )}
-                        {layout === Layout.Tabs && (
-                          <li className="nav-item">
-                            <button
-                              className={`nav-link ${
-                                tab === Tab.Widget ? "active" : "text-secondary"
-                              }`}
-                              aria-current="page"
-                              onClick={() => {
-                                setRenderCode(code);
-                                setTab(Tab.Widget);
-                              }}
+                              <div className="d-flex tabName">
+                                {/* X1 */}
+                                {isDraft && <div className="draft">Draft</div>}
+                                <div>{widgetName}</div>
+                                {codeChangesPresent && (
+                                  <div className="dot"></div>
+                                )}
+                              </div>
+                              <button
+                                className={`close btn btn-lg border-0 py-0 px-1 ms-1 rounded-circle btn-outline-secondary`}
+                                style={{
+                                  marginTop: "-3px",
+                                  marginBottom: "0px",
+                                }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  removeFromFiles(p);
+                                  if (jp === jpath) {
+                                    if (files.length > 1) {
+                                      openFile(files[idx - 1] || files[idx + 1]);
+                                    } else {
+                                      createFile(Filetype.Widget);
+                                    }
+                                  }
+                                }}
+                              >
+                                <i className="bi bi-x"></i>
+                              </button>
+                            </Nav.Link>
+                          </TopMenu>
+                        </Nav.Item>
+                      );
+                    })}
+                    <Nav.Item className="me-1">
+                      {openCreateButton}
+                      {/* {renameButton} */}
+                    </Nav.Item>
+                  </Nav>
+                </div>
+                <div
+                  className="d-flex ms-auto"
+                  style={{ minWidth: "280px", flexWrap: "wrap" }}
+                >
+                  <Nav
+                    variant="pills mb-2 mt-2 ms-auto"
+                    activeKey={jpath}
+                    onSelect={(key) => openFile(JSON.parse(key))}
+                  >
+                    <Nav.Item className="">
+                      {saveDraftButton}
+                      {forkButton}
+
+                      {filesDetails.get(widgetName)?.isDraft
+                        ? publishDraftAsMainButton
+                        : publishButton}
+                    </Nav.Item>
+                  </Nav>
+                </div>
+              </div>
+
+              {props.widgets.editorComponentSearch && (
+                <div style={{margin:'10px 0 20px 0'}}>
+                  {/* We use the component search widget as a VM entry point to add a TOS check wrapper.
+                  It does not need to be this component, just some <Widget /> on the page */}
+                  <Widget
+                    src={props.tos.checkComponentPath}
+                    props={{
+                      logOut: props.logOut,
+                      tosName: props.tos.contentComponentPath,
+                      targetComponent: props.widgets.editorComponentSearch,
+                      targetProps: useMemo(
+                        () => ({
+                          extraButtons: ({ widgetName, widgetPath, onHide }) => (
+                            <OverlayTrigger
+                              placement="auto"
+                              overlay={
+                                <Tooltip>
+                                  Open "{widgetName}" component in the editor
+                                </Tooltip>
+                              }
                             >
-                              Component Preview
-                            </button>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                    {layout === Layout.Tabs && (
-                      <div className="ms-auto d-flex">
-                        {path && accountId && openInNewTabButton}
-                        <div
-                          className="btn-group"
-                          role="group"
-                          aria-label="Layout selection"
+                            <div style={{display:'flex', alignItems:'center'}}>
+                              {OpenButtonIcon}
+
+                                <button
+                                  className="btn btn-white-primary"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    loadFile(widgetPath);
+                                    onHide && onHide();
+                                  }}
+                                >
+                                  Open
+                                </button>
+                              </div>
+                            </OverlayTrigger>
+                          ),
+                        }),
+                        [loadFile]
+                      ),
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="d-flex align-content-start">
+              <div className="flex-grow-1">
+                <div className="row">
+                  <div className={layoutClass}>
+                    <div
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <div>
+                        <ul
+                          className={`nav nav-tabs`}
                           style={{
-                            height: "38px",
+                            borderBottom: "0px",
+                            marginTop: "9px",
                           }}
                         >
-                          <input
-                            type="radio"
-                            className="btn-check"
-                            name="layout-radio"
-                            id="layout-tabs"
-                            autoComplete="off"
-                            checked={layout === Layout.Tabs}
-                            onChange={onLayoutChange}
-                            value={Layout.Tabs}
-                            title={"Set layout to Tabs mode"}
-                          />
-                          <label
-                            className="btn btn-outline-secondary"
-                            htmlFor="layout-tabs"
-                          >
-                            <i className="bi bi-square" />
-                          </label>
-                          <input
-                            type="radio"
-                            className="btn-check"
-                            name="layout-radio"
-                            id="layout-split"
-                            autoComplete="off"
-                            checked={layout === Layout.Split}
-                            value={Layout.Split}
-                            title={"Set layout to Split mode"}
-                            onChange={onLayoutChange}
-                          />
-                          <label
-                            className="btn btn-outline-secondary"
-                            htmlFor="layout-split"
-                          >
-                            <i className="bi bi-layout-split" />
-                          </label>
-                        </div>
+                          <li className="nav-item">
+                            <button
+                              className={`nav-link ${
+                                tab === Tab.Editor ? "active" : "text-secondary"
+                              }`}
+                              aria-current="page"
+                              onClick={() => setTab(Tab.Editor)}
+                            >
+                              Component
+                            </button>
+                          </li>
+                          <li className="nav-item">
+                            <button
+                              className={`nav-link ${
+                                tab === Tab.Props ? "active" : "text-secondary"
+                              }`}
+                              aria-current="page"
+                              onClick={() => setTab(Tab.Props)}
+                            >
+                              Props
+                            </button>
+                          </li>
+                          {props.widgets.widgetMetadataEditor && (
+                            <li className="nav-item">
+                              <button
+                                className={`nav-link ${
+                                  tab === Tab.Metadata
+                                    ? "active"
+                                    : "text-secondary"
+                                }`}
+                                aria-current="page"
+                                onClick={() => setTab(Tab.Metadata)}
+                              >
+                                Metadata
+                              </button>
+                            </li>
+                          )}
+                          {layout === Layout.Tabs && (
+                            <li className="nav-item">
+                              <button
+                                className={`nav-link ${
+                                  tab === Tab.Widget ? "active" : "text-secondary"
+                                }`}
+                                aria-current="page"
+                                onClick={() => {
+                                  setRenderCode(code);
+                                  setTab(Tab.Widget);
+                                }}
+                              >
+                                Component Preview
+                              </button>
+                            </li>
+                          )}
+                        </ul>
                       </div>
-                    )}
-                  </div>
+                      {layout === Layout.Tabs && (
+                        <div className="ms-auto d-flex button-c">
+                          {path && accountId && openInNewTabButton}
+                          <div
+                            className="btn-group"
+                            role="group"
+                            aria-label="Layout selection"
+                            style={{
+                              height: "38px",
+                            }}
+                          >
+                            <input
+                              type="radio"
+                              className="btn-check"
+                              name="layout-radio"
+                              id="layout-tabs"
+                              autoComplete="off"
+                              checked={layout === Layout.Tabs}
+                              onChange={onLayoutChange}
+                              value={Layout.Tabs}
+                              title={"Set layout to Tabs mode"}
+                            />
+                            <label
+                              className="btn btn-outline-secondary"
+                              htmlFor="layout-tabs"
+                            >
+                              <i className="bi bi-square" />
+                            </label>
+                            <input
+                              type="radio"
+                              className="btn-check"
+                              name="layout-radio"
+                              id="layout-split"
+                              autoComplete="off"
+                              checked={layout === Layout.Split}
+                              value={Layout.Split}
+                              title={"Set layout to Split mode"}
+                              onChange={onLayoutChange}
+                            />
+                            <label
+                              className="btn btn-outline-secondary"
+                              htmlFor="layout-split"
+                            >
+                              <i className="bi bi-layout-split" />
+                            </label>
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
-                  <div
-                    className={`${tab === Tab.Editor ? "" : "visually-hidden"}`}
-                  >
                     <div
-                      className="form-control mb-3"
-                      style={{ height: "70vh", borderTopLeftRadius: "0px" }}
+                      className={`${tab === Tab.Editor ? "" : "visually-hidden"}`}
                     >
-                      <Editor
-                        value={code}
-                        path={widgetPath}
-                        defaultLanguage="javascript"
-                        onChange={(code) => updateCode(path, code)}
-                        wrapperProps={{
-                          onBlur: () => reformat(path, code),
+                      <div
+                        className="form-control mb-3"
+                        style={{ height: "70vh", padding:'0px', border:'1px solid rgba(255, 255, 255, 0.3)', borderRadius:'12px',borderTopLeftRadius: "0px",overflow:"hidden"}}
+                      >
+                        <Editor
+                          value={code}
+                          path={widgetPath}
+                          defaultLanguage="javascript"
+                          theme="vs-dark"
+                          onChange={(code) => updateCode(path, code)}
+                          wrapperProps={{
+                            onBlur: () => reformat(path, code),
+                          }}
+                        />
+                      </div>
+                      <div className="mb-3 d-flex gap-2 flex-wrap"></div>
+                    </div>
+                    <div
+                      className={`${tab === Tab.Props ? "" : "visually-hidden"}`}
+                    >
+                      <div className="form-control" style={{ height: "70vh", padding:'0px', border:'1px solid rgba(255, 255, 255, 0.3)', borderRadius:'12px',overflow:"hidden"}}>
+                        <Editor
+                          value={widgetProps}
+                          defaultLanguage="json"
+                          theme="vs-dark"
+                          onChange={(props) => setWidgetProps(props)}
+                          wrapperProps={{
+                            onBlur: () => reformatProps(widgetProps),
+                          }}
+                        />
+                      </div>
+                      <div className=" mb-3">
+                        ^^ Props for debugging (in JSON)
+                      </div>
+                      {propsError && (
+                        <pre className="alert alert-danger">{propsError}</pre>
+                      )}
+                    </div>
+                    <div
+                      className={`${
+                        tab === Tab.Metadata && props.widgets.widgetMetadataEditor
+                          ? ""
+                          : "visually-hidden"
+                      }`}
+                    >
+                      <div
+                        className="mb-3"
+                        style={{
+                          paddingTop: "20px",
+                          padding: "20px",
+                          border: "1px solid rgb(255, 255, 255, 0.3)",
+                          appearance: "none",
+                          borderRadius: "12px",
+                          minHeight: "70vh",
                         }}
-                      />
+                      >
+                        <Widget
+                          src={props.widgets.widgetMetadataEditor}
+                          key={`metadata-editor-${jpath}`}
+                          props={useMemo(
+                            () => ({
+                              widgetPath: widgetPath
+                              + (filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""),
+                              onChange: setMetadata,
+                            }),
+                            [widgetPath]
+                          )}
+                        />
+                      </div>
                     </div>
-                    <div className="mb-3 d-flex gap-2 flex-wrap"></div>
-                  </div>
-                  <div
-                    className={`${tab === Tab.Props ? "" : "visually-hidden"}`}
-                  >
-                    <div className="form-control" style={{ height: "70vh" }}>
-                      <Editor
-                        value={widgetProps}
-                        defaultLanguage="json"
-                        onChange={(props) => setWidgetProps(props)}
-                        wrapperProps={{
-                          onBlur: () => reformatProps(widgetProps),
-                        }}
-                      />
-                    </div>
-                    <div className=" mb-3">
-                      ^^ Props for debugging (in JSON)
-                    </div>
-                    {propsError && (
-                      <pre className="alert alert-danger">{propsError}</pre>
-                    )}
                   </div>
                   <div
                     className={`${
-                      tab === Tab.Metadata && props.widgets.widgetMetadataEditor
-                        ? ""
+                      tab === Tab.Widget ||
+                      (layout === Layout.Split && tab !== Tab.Metadata)
+                        ? layoutClass
                         : "visually-hidden"
                     }`}
                   >
-                    <div
-                      className="mb-3"
-                      style={{
-                        paddingTop: "20px",
-                        padding: "20px",
-                        border: "1px solid rgb(206, 212, 218)",
-                        appearance: "none",
-                        borderRadius: "0.375rem",
-                        height: "70vh",
-                      }}
-                    >
-                      <Widget
-                        src={props.widgets.widgetMetadataEditor}
-                        key={`metadata-editor-${jpath}`}
-                        props={useMemo(
-                          () => ({
-                            widgetPath: widgetPath
-                             + (filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""),
-                            onChange: setMetadata,
-                          }),
-                          [widgetPath]
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={`${
-                    tab === Tab.Widget ||
-                    (layout === Layout.Split && tab !== Tab.Metadata)
-                      ? layoutClass
-                      : "visually-hidden"
-                  }`}
-                >
-                  <div style={{}}>
-                    {tab === Tab.Widget || (
+                    <div style={{}}>
+                      {tab === Tab.Widget || (
+                        <div
+                          style={{
+                            height: "38px",
+                            display: "flex",
+                            marginBottom: "12px",
+                            justifyContent: "end",
+                          }}
+                        >
+                          {tab === Tab.Widget || (
+                            <>
+                              {renderCode && (
+                                <div className="d-flex justify-content-end me-2">
+                                  {renderPreviewButton}
+                                </div>
+                              )}
+                              {path && accountId && openInNewTabButton}
+                              <div
+                                className="btn-group"
+                                role="group"
+                                aria-label="Layout selection"
+                              >
+                                <input
+                                  type="radio"
+                                  className="btn-check"
+                                  name="layout-radio"
+                                  id="layout-tabs"
+                                  autoComplete="off"
+                                  checked={layout === Layout.Tabs}
+                                  onChange={onLayoutChange}
+                                  value={Layout.Tabs}
+                                  title={"Set layout to Tabs mode"}
+                                />
+                                <label
+                                  className="btn btn-outline-secondary"
+                                  htmlFor="layout-tabs"
+                                >
+                                  <i className="bi bi-square" />
+                                </label>
+
+                                <input
+                                  type="radio"
+                                  className="btn-check"
+                                  name="layout-radio"
+                                  id="layout-split"
+                                  autoComplete="off"
+                                  checked={layout === Layout.Split}
+                                  value={Layout.Split}
+                                  title={"Set layout to Split mode"}
+                                  onChange={onLayoutChange}
+                                />
+                                <label
+                                  className="btn btn-outline-secondary"
+                                  htmlFor="layout-split"
+                                >
+                                  <i className="bi bi-layout-split" />
+                                </label>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
                       <div
-                        style={{
-                          height: "38px",
-                          display: "flex",
-                          marginBottom: "12px",
-                          justifyContent: "end",
-                        }}
+                        className="container"
+                        style={
+                          tab === Tab.Widget
+                            ? {
+                                border: "1px solid rgba(255, 255, 255, 0.3)",
+                                appearance: "none",
+                                borderRadius: "12px",
+                                height: "70vh",
+                                maxWidth: "100%",
+                                padding: "20px",
+                              }
+                            : {
+                                padding: "20px",
+                                border: "1px solid rgba(255, 255, 255, 0.3)",
+                                appearance: "none",
+                                borderRadius: "12px",
+                                height: "70vh",
+                              }
+                        }
                       >
-                        {tab === Tab.Widget || (
-                          <>
-                            {renderCode && (
-                              <div className="d-flex justify-content-end me-2">
+                        <div className="h-100 row">
+                          <div className="d-inline-block position-relative overflow-auto h-100">
+                            {renderCode ? (
+                              <div
+                                style={{
+                                  padding: 0,
+                                  margin: 0,
+                                }}
+                              >
+                                <Widget
+                                  key={`preview-${jpath}`}
+                                  code={renderCode}
+                                  props={parsedWidgetProps}
+                                />
+                              </div>
+                            ) : (
+                              <div
+                                style={{
+                                  padding: 0,
+                                  margin: 0,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
                                 {renderPreviewButton}
                               </div>
                             )}
-                            {path && accountId && openInNewTabButton}
-                            <div
-                              className="btn-group"
-                              role="group"
-                              aria-label="Layout selection"
-                            >
-                              <input
-                                type="radio"
-                                className="btn-check"
-                                name="layout-radio"
-                                id="layout-tabs"
-                                autoComplete="off"
-                                checked={layout === Layout.Tabs}
-                                onChange={onLayoutChange}
-                                value={Layout.Tabs}
-                                title={"Set layout to Tabs mode"}
-                              />
-                              <label
-                                className="btn btn-outline-secondary"
-                                htmlFor="layout-tabs"
-                              >
-                                <i className="bi bi-square" />
-                              </label>
-
-                              <input
-                                type="radio"
-                                className="btn-check"
-                                name="layout-radio"
-                                id="layout-split"
-                                autoComplete="off"
-                                checked={layout === Layout.Split}
-                                value={Layout.Split}
-                                title={"Set layout to Split mode"}
-                                onChange={onLayoutChange}
-                              />
-                              <label
-                                className="btn btn-outline-secondary"
-                                htmlFor="layout-split"
-                              >
-                                <i className="bi bi-layout-split" />
-                              </label>
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    )}
-                    <div
-                      className="container"
-                      style={
-                        tab === Tab.Widget
-                          ? {
-                              border: "1px solid #ced4da",
-                              appearance: "none",
-                              borderRadius: "0.375rem",
-                              height: "70vh",
-                              maxWidth: "100%",
-                              padding: "20px",
-                            }
-                          : {
-                              padding: "20px",
-                              border: "1px solid #ced4da",
-                              appearance: "none",
-                              borderRadius: "0.375rem",
-                              height: "70vh",
-                            }
-                      }
-                    >
-                      <div className="h-100 row">
-                        <div className="d-inline-block position-relative overflow-auto h-100">
-                          {renderCode ? (
-                            <div
-                              style={{
-                                padding: 0,
-                                margin: 0,
-                              }}
-                            >
-                              <Widget
-                                key={`preview-${jpath}`}
-                                code={renderCode}
-                                props={parsedWidgetProps}
-                              />
-                            </div>
-                          ) : (
-                            <div
-                              style={{
-                                padding: 0,
-                                margin: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                            >
-                              {renderPreviewButton}
-                            </div>
-                          )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div
-                  className={`${
-                    tab === Tab.Metadata ? layoutClass : "visually-hidden"
-                  }`}
-                >
-                  <div className="container" style={{ marginTop: "50px" }}>
-                    <div className="row">
-                      <div className="d-inline-block position-relative overflow-hidden">
-                        <Widget
-                          key={`metadata-${jpath}`}
-                          src={props.widgets.widgetMetadata}
-                          props={useMemo(
-                            () => ({ metadata, accountId }),
-                            [metadata, accountId]
-                          )}
-                        />
+                  <div
+                    className={`${
+                      tab === Tab.Metadata ? layoutClass : "visually-hidden"
+                    }`}
+                  >
+                    <div className="container" style={{ marginTop: "50px" }}>
+                      <div className="row">
+                        <div className="d-inline-block position-relative overflow-hidden">
+                          <Widget
+                            key={`metadata-${jpath}`}
+                            src={props.widgets.widgetMetadata}
+                            props={useMemo(
+                              () => ({ metadata, accountId }),
+                              [metadata, accountId]
+                            )}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1308,7 +1379,7 @@ export default function EditorPage(props) {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </>
   );
 }

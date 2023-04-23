@@ -41,7 +41,7 @@ export default function OpenModal(props) {
         >
           Create
         </button>
-        <button className="btn btn-secondary" onClick={onHide}>
+        <button className="btn btn-cancel" onClick={onHide}>
           Cancel
         </button>
       </Modal.Footer>

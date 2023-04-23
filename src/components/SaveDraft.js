@@ -44,7 +44,7 @@ export const SaveDraftModal = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <CommitButton
-          className="btn btn-primary"
+          className="btn btn-green"
           near={near}
           onCommit={() => onHide()}
           data={{
@@ -69,7 +69,7 @@ export const SaveDraftModal = (props) => {
         >
           Save
         </CommitButton>
-        <button className="btn btn-secondary" onClick={onCancel}>
+        <button className="btn btn-cancel" onClick={onCancel}>
           Cancel
         </button>
       </Modal.Footer>
