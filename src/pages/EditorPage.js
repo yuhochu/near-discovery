@@ -26,16 +26,16 @@ const TopMenu = styled.div`
   color: #11181c;
   height: 40px;
 
-  &&& > a.active .tabName{
-    border-bottom:4px solid #00FFD1;
-    height:36px;
+  &&& > a.active .tabName {
+    border-bottom: 4px solid #00ffd1;
+    height: 36px;
   }
   &&& > a {
     background: transparent;
     color: #fff;
     padding-left: 6px;
     padding-right: 6px;
-    margin-right:5px;
+    margin-right: 5px;
   }
 
   .draft {
@@ -65,61 +65,63 @@ const TopMenu = styled.div`
   }
 `;
 const Container = styled.div`
-.btn-group{
-  .btn{
-    border-radius:12px;
+  .btn-group {
+    .btn {
+      border-radius: 12px;
+    }
+    & > .btn:nth-child(n + 3),
+    .btn-group > :not(.btn-check) + .btn,
+    .btn-group > .btn-group:not(:first-child) > .btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
-  & > .btn:nth-child(n + 3), .btn-group > :not(.btn-check) + .btn, .btn-group > .btn-group:not(:first-child) > .btn{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  .nav-item {
+    margin-right: 3px;
   }
-}
-.nav-item{
-  margin-right:3px;
-}
-.nav-tabs{
-  position:relative;
-  top:1px;
-}
-.nav-tabs .nav-link{
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  transition: none;
-}
-
-
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
-  background-color:transparent;
-  color:#fff;
-  border:1px solid rgba(255, 255, 255, 0.3);
-  border-bottom:none;
-}
-.nav-tabs .nav-link.active{
-  background-color:#101b1f;
-} 
-.nav-tabs .nav-link:hover{
-  border:1px solid rgba(255, 255, 255, 0.3);
-  border-bottom:none;
-}
-.form-control{
-  background-color:transparent;
-  border:none;
-}
-.btn-custom-primary{
-  background: rgba(26, 46, 51, 0.25);
-  border: 0.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  color:#fff;
-}
-
-.button-c{
-  color:#fff;
-  .btn{
-    border:0.5px solid rgba(255, 255, 255, 0.3);
-    color:#fff;
+  .nav-tabs {
+    position: relative;
+    top: 1px;
   }
-}
-`
+  .nav-tabs .nav-link {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: none;
+  }
+
+  .nav-tabs .nav-link.active,
+  .nav-tabs .nav-item.show .nav-link {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
+  }
+  .nav-tabs .nav-link.active {
+    background-color: #101b1f;
+  }
+  .nav-tabs .nav-link:hover {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: none;
+  }
+  .form-control {
+    background-color: transparent;
+    border: none;
+  }
+  .btn-custom-primary {
+    background: rgba(26, 46, 51, 0.25);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: #fff;
+  }
+
+  .button-c {
+    color: #fff;
+    .btn {
+      border: 0.5px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+  }
+`;
 
 const StorageDomain = {
   page: "editor",
@@ -291,12 +293,17 @@ export default function EditorPage(props) {
         const draft = widgetCode?.branch?.draft?.[""];
         const isDraft = (!draft && !mainCode) || draft;
         const path = f;
-
         setFilesDetails(
-          filesDetails.set(f.name, {
-            codeChangesPresent: filesDetails.get(f.name)?.codeChangesPresent,
-            isDraft,
-          })
+          filesDetails.set(
+            f.name,
+            JSON.parse(
+              JSON.stringify({
+                codeChangesPresent: filesDetails.get(f.name)
+                  ?.codeChangesPresent,
+                isDraft,
+              })
+            )
+          )
         );
       };
       fetchCodeAndDraftOnChain();
@@ -701,7 +708,7 @@ export default function EditorPage(props) {
               draft: {
                 "": null,
                 metadata: null,
-              }
+              },
             },
           },
         },
@@ -770,18 +777,24 @@ export default function EditorPage(props) {
     // >
     //   <i className="bi bi-plus"></i>
     // </button>
-    <div onClick={() => setShowAddModal(true)} style={{
-      display:'flex',
-      alignItems:'center',
-      color:'#fff',
-      fontWeight: '500',
-      fontSize: '14px',
-      height: "40px",
-      cursor:"pointer",
-      marginRight:"20px"
-    }}>
+    <div
+      onClick={() => setShowAddModal(true)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        color: "#fff",
+        fontWeight: "500",
+        fontSize: "14px",
+        height: "40px",
+        cursor: "pointer",
+        marginRight: "20px",
+      }}
+    >
       Add
-      <i className="bi bi-plus" style={{fontSize:'20px', fontWeight: '500'}}></i>
+      <i
+        className="bi bi-plus"
+        style={{ fontSize: "20px", fontWeight: "500" }}
+      ></i>
     </div>
   );
 
@@ -795,17 +808,23 @@ export default function EditorPage(props) {
     // >
     //   <i className="bi bi-pen"></i>
     // </button>
-    <div onClick={() => setShowRenameModal(true)} style={{
-      display:'flex',
-      alignItems:'center',
-      color:'#fff',
-      fontWeight: '500',
-      fontSize: '14px',
-      height: "40px",
-      cursor:"pointer",
-    }}>
+    <div
+      onClick={() => setShowRenameModal(true)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        color: "#fff",
+        fontWeight: "500",
+        fontSize: "14px",
+        height: "40px",
+        cursor: "pointer",
+      }}
+    >
       Edit
-      <i className="bi bi-pen" style={{fontSize:'12px', fontWeight: '500',marginLeft:'5px'}}></i>
+      <i
+        className="bi bi-pen"
+        style={{ fontSize: "12px", fontWeight: "500", marginLeft: "5px" }}
+      ></i>
     </div>
   );
 
@@ -813,7 +832,9 @@ export default function EditorPage(props) {
     <a
       className="btn me-2 btn-custom-primary"
       style={{ height: "38px" }}
-      href={`#/${widgetPath}${filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""}`}
+      href={`#/${widgetPath}${
+        filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""
+      }`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -834,9 +855,20 @@ export default function EditorPage(props) {
   );
 
   const showEditor = !(files?.length === 1 && files[0]?.unnamed === true);
-  const OpenButtonIcon =  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M5.09411 0.4668C3.48623 2.66122 1.87845 4.85542 0.270465 7.04958C-0.301894 7.83094 0.233009 8.95701 1.17669 8.95701H10.8236C11.7672 8.95701 12.3022 7.83094 11.7295 7.04958C10.1219 4.85542 8.51384 2.66126 6.90606 0.4668C6.44999 -0.1556 5.55032 -0.1556 5.09411 0.4668ZM0.751334 11.9861H10.3913C10.7746 11.9861 11.5722 12.1064 11.8719 11.6394C12.2055 11.12 11.8486 10.4239 11.2489 10.4239H1.60899C1.22547 10.4239 0.428086 10.3038 0.127975 10.7709C-0.205466 11.29 0.151429 11.9861 0.751334 11.9861Z" fill="white"/>
-  </svg>;
+  const OpenButtonIcon = (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.09411 0.4668C3.48623 2.66122 1.87845 4.85542 0.270465 7.04958C-0.301894 7.83094 0.233009 8.95701 1.17669 8.95701H10.8236C11.7672 8.95701 12.3022 7.83094 11.7295 7.04958C10.1219 4.85542 8.51384 2.66126 6.90606 0.4668C6.44999 -0.1556 5.55032 -0.1556 5.09411 0.4668ZM0.751334 11.9861H10.3913C10.7746 11.9861 11.5722 12.1064 11.8719 11.6394C12.2055 11.12 11.8486 10.4239 11.2489 10.4239H1.60899C1.22547 10.4239 0.428086 10.3038 0.127975 10.7709C-0.205466 11.29 0.151429 11.9861 0.751334 11.9861Z"
+        fill="white"
+      />
+    </svg>
+  );
   return (
     <>
       <div
@@ -969,7 +1001,9 @@ export default function EditorPage(props) {
                                   removeFromFiles(p);
                                   if (jp === jpath) {
                                     if (files.length > 1) {
-                                      openFile(files[idx - 1] || files[idx + 1]);
+                                      openFile(
+                                        files[idx - 1] || files[idx + 1]
+                                      );
                                     } else {
                                       createFile(Filetype.Widget);
                                     }
@@ -983,7 +1017,10 @@ export default function EditorPage(props) {
                         </Nav.Item>
                       );
                     })}
-                    <Nav.Item className="me-1" style={{display:'flex', alignItems:'center'}}>
+                    <Nav.Item
+                      className="me-1"
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
                       {openCreateButton}
                       {renameButton}
                     </Nav.Item>
@@ -1011,7 +1048,7 @@ export default function EditorPage(props) {
               </div>
 
               {props.widgets.editorComponentSearch && (
-                <div style={{margin:'10px 0 20px 0'}}>
+                <div style={{ margin: "10px 0 20px 0" }}>
                   {/* We use the component search widget as a VM entry point to add a TOS check wrapper.
                   It does not need to be this component, just some <Widget /> on the page */}
                   <Widget
@@ -1022,7 +1059,11 @@ export default function EditorPage(props) {
                       targetComponent: props.widgets.editorComponentSearch,
                       targetProps: useMemo(
                         () => ({
-                          extraButtons: ({ widgetName, widgetPath, onHide }) => (
+                          extraButtons: ({
+                            widgetName,
+                            widgetPath,
+                            onHide,
+                          }) => (
                             <OverlayTrigger
                               placement="auto"
                               overlay={
@@ -1031,8 +1072,13 @@ export default function EditorPage(props) {
                                 </Tooltip>
                               }
                             >
-                            <div style={{display:'flex', alignItems:'center'}}>
-                              {OpenButtonIcon}
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {OpenButtonIcon}
 
                                 <button
                                   className="btn btn-white-primary"
@@ -1113,7 +1159,9 @@ export default function EditorPage(props) {
                             <li className="nav-item">
                               <button
                                 className={`nav-link ${
-                                  tab === Tab.Widget ? "active" : "text-secondary"
+                                  tab === Tab.Widget
+                                    ? "active"
+                                    : "text-secondary"
                                 }`}
                                 aria-current="page"
                                 onClick={() => {
@@ -1178,11 +1226,20 @@ export default function EditorPage(props) {
                     </div>
 
                     <div
-                      className={`${tab === Tab.Editor ? "" : "visually-hidden"}`}
+                      className={`${
+                        tab === Tab.Editor ? "" : "visually-hidden"
+                      }`}
                     >
                       <div
                         className="form-control mb-3"
-                        style={{ height: "70vh", padding:'0px', border:'1px solid rgba(255, 255, 255, 0.3)', borderRadius:'12px',borderTopLeftRadius: "0px",overflow:"hidden"}}
+                        style={{
+                          height: "70vh",
+                          padding: "0px",
+                          border: "1px solid rgba(255, 255, 255, 0.3)",
+                          borderRadius: "12px",
+                          borderTopLeftRadius: "0px",
+                          overflow: "hidden",
+                        }}
                       >
                         <Editor
                           value={code}
@@ -1198,9 +1255,20 @@ export default function EditorPage(props) {
                       <div className="mb-3 d-flex gap-2 flex-wrap"></div>
                     </div>
                     <div
-                      className={`${tab === Tab.Props ? "" : "visually-hidden"}`}
+                      className={`${
+                        tab === Tab.Props ? "" : "visually-hidden"
+                      }`}
                     >
-                      <div className="form-control" style={{ height: "70vh", padding:'0px', border:'1px solid rgba(255, 255, 255, 0.3)', borderRadius:'12px',overflow:"hidden"}}>
+                      <div
+                        className="form-control"
+                        style={{
+                          height: "70vh",
+                          padding: "0px",
+                          border: "1px solid rgba(255, 255, 255, 0.3)",
+                          borderRadius: "12px",
+                          overflow: "hidden",
+                        }}
+                      >
                         <Editor
                           value={widgetProps}
                           defaultLanguage="json"
@@ -1220,7 +1288,8 @@ export default function EditorPage(props) {
                     </div>
                     <div
                       className={`${
-                        tab === Tab.Metadata && props.widgets.widgetMetadataEditor
+                        tab === Tab.Metadata &&
+                        props.widgets.widgetMetadataEditor
                           ? ""
                           : "visually-hidden"
                       }`}
@@ -1239,14 +1308,16 @@ export default function EditorPage(props) {
                         <Widget
                           src={props.widgets.widgetMetadataEditor}
                           key={`metadata-editor-${jpath}`}
-                          props={useMemo(
-                            () => ({
-                              widgetPath: widgetPath
-                              + (filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""),
+                          props={useMemo(() => {
+                            return {
+                              widgetPath:
+                                widgetPath +
+                                (filesDetails.get(widgetName)?.isDraft
+                                  ? "/branch/draft"
+                                  : ""),
                               onChange: setMetadata,
-                            }),
-                            [widgetPath]
-                          )}
+                            };
+                          }, [widgetPath])}
                         />
                       </div>
                     </div>

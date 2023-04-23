@@ -23,8 +23,12 @@ import { NetworkId, Widgets } from "./data/widgets";
 import styled from "styled-components";
 
 const StyledApp = styled.div`
-  background: radial-gradient(64.26% 67.04% at 49.31% 0%, #002C35 0%, #101011 100%);
-  min-height:100vh;
+  background: radial-gradient(
+    64.26% 67.04% at 49.31% 0%,
+    #002c35 0%,
+    #101011 100%
+  );
+  min-height: 100vh;
   @media (max-width: 991px) {
     padding-bottom: 40px;
   }

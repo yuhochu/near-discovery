@@ -22,7 +22,7 @@
     "local-storage": "^2.0.0",
     "near-api-js": "^0.45.1",
     "near-social-vm": "NearSocial/VM#1.0.0",
-    "prettier": "^2.7.1",
+    "prettier": "2.3.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
@@ -36,7 +36,9 @@
     "prod": "npm run webpack -- --env mode=production",
     "prod:analyze": "npm run prod -- --env presets=analyze",
     "build": "npm run prod",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "prettier": "prettier --check src",
+    "prettier:fix": "prettier --write src"
   },
   "eslintConfig": {
     "extends": [
