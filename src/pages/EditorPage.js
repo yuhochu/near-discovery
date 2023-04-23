@@ -65,6 +65,15 @@ const TopMenu = styled.div`
   }
 `;
 const Container = styled.div`
+.btn-group{
+  .btn{
+    border-radius:12px;
+  }
+  & > .btn:nth-child(n + 3), .btn-group > :not(.btn-check) + .btn, .btn-group > .btn-group:not(:first-child) > .btn{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
 .nav-item{
   margin-right:3px;
 }
@@ -735,7 +744,7 @@ export default function EditorPage(props) {
 
   const renderPreviewButton = (
     <button
-      className="btn btn-outline-primary"
+      className="btn btn-custom-primary"
       onClick={() => {
         setRenderCode(code);
         if (layout === Layout.Tabs) {
@@ -789,7 +798,7 @@ export default function EditorPage(props) {
 
   const openInNewTabButton = (
     <a
-      className="btn me-2 btn-outline-secondary"
+      className="btn me-2 btn-custom-primary"
       style={{ height: "38px" }}
       href={`#/${widgetPath}${filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""}`}
       target="_blank"
