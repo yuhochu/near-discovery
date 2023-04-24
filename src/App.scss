@@ -1,6 +1,7 @@
 @import "bootstrap";
 
-body, html {
+body,
+html {
   -webkit-font-smoothing: antialiased;
 }
 
@@ -8,10 +9,11 @@ body, html {
   cursor: pointer;
 }
 
-.btn-success, .btn-primary {
+.btn-success,
+.btn-primary {
   .text-muted {
     color: #fff !important;
-  };
+  }
 }
 
 .outline-none {
@@ -29,7 +31,7 @@ a {
 }
 
 .sidebar-items {
-  &> div {
+  & > div {
     border-right: 1px solid #e5e5e5;
     text-align: center;
     min-height: 4rem;
@@ -37,9 +39,48 @@ a {
     display: flex;
   }
 
-  &> div:not(.apps) {
+  & > div:not(.apps) {
     min-width: 4rem;
     align-items: center !important;
     justify-content: center !important;
+  }
+}
+
+// modal css
+.modal-content {
+  background: #1a2e33;
+  .modal-header {
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+    .btn-close {
+      opacity: 1;
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAGxJREFUKFOdkkERgDAMBDc/JCADGchABnKQgSQk8DsmDGVgkk/aZy/bbNqapAmYgc3MDpIlaQQWYDdJKzAAZwZ9iu8aBxodoDRzgyx4zFzjd5A15QTyKHR9gaSTb4W5+oGSUmno8rX2PFzpa1zdkmd7nNj79AAAAABJRU5ErkJggg==")
+        center center no-repeat;
+    }
+  }
+  .modal-body {
+    color: #fff;
+    input {
+      background: rgba(26, 46, 51, 0.25);
+      border: 0.5px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+  .modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0);
+    .btn-green,
+    .btn-success {
+      background-color: #00ffd1;
+      color: #101011;
+    }
+    .btn-cancel,
+    .btn-secondary {
+      background: rgba(26, 46, 51, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
   }
 }

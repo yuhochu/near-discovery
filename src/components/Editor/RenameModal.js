@@ -40,7 +40,7 @@ export default function RenameModal(props) {
         >
           Confirm
         </button>
-        <button className="btn btn-secondary" onClick={onHide}>
+        <button className="btn btn-cancel" onClick={onHide}>
           Cancel
         </button>
       </Modal.Footer>
