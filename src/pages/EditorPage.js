@@ -135,7 +135,7 @@ export default function EditorPage(props) {
     return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
   }
 
-  const [chartSymbol, setChartSymbol] = useState('AAPL');
+  const [chartSymbol, setChartSymbol] = useState('AAL');
 
   const [chartReady, setChartReady] = useState(false);
 
@@ -178,7 +178,6 @@ export default function EditorPage(props) {
   });
 
   const defaultProps = {
-    symbol: 'AAPL',
     interval: 'D',
     libraryPath: 'assets/charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
