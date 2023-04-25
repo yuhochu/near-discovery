@@ -38,10 +38,10 @@ const MainnetWidgets = {
   componentsPage: "adminalpha.near/widget/ComponentsPage",
   peoplePage: "adminalpha.near/widget/PeoplePage",
   globalSearchPage: "adminalpha.near/widget/GlobalSearchPage",
-  notificationButton: "adminalpha.near/widget/NotificationButton",
-  profilePage: "adminalpha.near/widget/ProfilePage",
+  notificationButton: "ref-admin.near/widget/NotificationButton",
+  profilePage: "ref-admin.near/widget/ProfilePage",
   componentSummary: "ref-admin.near/widget/ComponentSummary",
-  notificationsPage: "adminalpha.near/widget/NotificationsPage",
+  notificationsPage: "ref-admin.near/widget/NotificationsPage",
   tosCheck: "adminalpha.near/widget/TosCheck",
   tosContent: "adminalpha.near/widget/TosContent",
 };
