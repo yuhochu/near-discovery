@@ -42,7 +42,7 @@ const MainnetWidgets = {
   profilePage: "ref-admin.near/widget/ProfilePage",
   componentSummary: "ref-admin.near/widget/ComponentSummary",
   notificationsPage: "ref-admin.near/widget/NotificationsPage",
-  tosCheck: "adminalpha.near/widget/TosCheck",
+  tosCheck: "ref-admin.near/widget/TosCheck",
   tosContent: "adminalpha.near/widget/TosContent",
 };
 

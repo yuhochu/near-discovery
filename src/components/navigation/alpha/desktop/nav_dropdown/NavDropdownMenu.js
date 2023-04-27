@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Widget } from "near-social-vm";
 import { NavDropdownMenuLinkList } from "./NavDropdownMenuLinkList";
+import { useParams } from "react-router-dom";
 
 const StyledNavDropdownMenu = styled.div`
   position: absolute;
@@ -67,6 +68,7 @@ const StyledNavDropdownMenu = styled.div`
 `;
 
 export function NavDropdownMenu(props) {
+  const { widgetSrc } = useParams();
   return (
     <StyledNavDropdownMenu className={props.menuDropdown ? "show" : ""}>
       <div className="container">
@@ -79,6 +81,7 @@ export function NavDropdownMenu(props) {
                 src: props.widgetSrc?.view,
                 size: "medium",
                 showTags: true,
+                canCustomHome: !widgetSrc,
               }}
             />
           </div>
