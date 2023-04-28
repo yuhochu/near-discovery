@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ShanShanLogo } from "../icons/Logo";
@@ -11,6 +11,7 @@ import { NavDropdownButton } from "./NavDropdownButton";
 import { NotificationWidget } from "../NotificationWidget";
 import image from "../icons/search.svg";
 import { useHistory } from "react-router-dom";
+import { Widget, useNear, useAccount, useCache } from "near-social-vm";
 
 const StyledNavigation = styled.div`
   position: sticky;
@@ -107,7 +108,22 @@ const StyledNavigation = styled.div`
 export function DesktopNavigation(props) {
   const [menuDropdown, setMenuDropdown] = useState(false);
   const [searchInputFocus, setSearchInputFocus] = useState(false);
+  // const [refMode, setRefMode] = useState('');
   const history = useHistory();
+  const near = useNear();
+  const cache = useCache();
+  // useEffect(() => {
+  //   cache.asyncLocalStorageGet({
+  //     src: 'ref-admin.near/widget/user-builder',
+  //     type: 'public'
+  //   }, 'ref-mode').then((res) => {
+  //     if (res) {
+  //       setRefMode(res);
+  //     } else {
+  //       setRefMode('user');
+  //     }
+  //   })
+  // }, [near, cache])
   return (
     <StyledNavigation onMouseLeave={() => setMenuDropdown(false)}>
       <div className="container">
@@ -140,9 +156,11 @@ export function DesktopNavigation(props) {
           <NavDropdownButton onMouseEnter={() => setMenuDropdown("discover")}>
             Discover
           </NavDropdownButton>
-          <NavDropdownButton onMouseEnter={() => setMenuDropdown("develop")}>
+          <Widget src="ref-admin.near/widget/wrap-code" props={{
+            code:<NavDropdownButton onMouseEnter={() => setMenuDropdown("develop")}>
             Develop
           </NavDropdownButton>
+          }}></Widget>
         </div>
         <div className="user-section">
           {!props.signedIn && (

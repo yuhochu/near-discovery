@@ -44,6 +44,8 @@ const MainnetWidgets = {
   notificationsPage: "ref-admin.near/widget/NotificationsPage",
   tosCheck: "ref-admin.near/widget/TosCheck",
   tosContent: "adminalpha.near/widget/TosContent",
+  userBuilder: "ref-admin.near/widget/user-builder",
+  refMode: "ref-admin.near/widget/ref-current-mode",
 };
 
 export const Widgets =

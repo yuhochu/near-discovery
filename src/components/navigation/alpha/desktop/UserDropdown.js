@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState,  useEffect} from "react";
 import styled from "styled-components";
 import { User } from "../../../icons/User";
 import { LogOut } from "../../../icons/LogOut";
 import { Withdraw } from "../../../icons/Withdraw";
 import { NavLink } from "react-router-dom";
-import { Widget, useNear, useAccount } from "near-social-vm";
+import { Widget, useNear, useAccount, useCache } from "near-social-vm";
 import PretendModal from "../../PretendModal";
 import { Pretend } from "../../../icons/Pretend";
 import { StopPretending } from "../../../icons/StopPretending";
@@ -18,12 +18,16 @@ const StyledDropdown = styled.div`
     display: flex;
     align-items: center;
     text-align: left;
-    background-color: var(--slate-dark-5);
-    border-radius: 50px;
+    background: #183035;
+    border-radius: 10px;
     outline: none;
     border: 0;
     padding: 6px;
-
+    .d-inline-block{
+      width: auto !important;
+      height: auto !important;
+      margin-left:8px;
+    }
     &:after {
       margin: 0 14px;
       border-color: var(--slate-dark-12);
@@ -34,14 +38,6 @@ const StyledDropdown = styled.div`
       height: 7px;
       transform: rotate(135deg);
     }
-
-    > div {
-      :first-of-type {
-        width: auto !important;
-        height: auto !important;
-      }
-    }
-
     img {
       border-radius: 50% !important;
       width: 28px !important;
@@ -112,13 +108,11 @@ const StyledDropdown = styled.div`
 export function UserDropdown(props) {
   const near = useNear();
   const account = useAccount();
-
   const withdrawStorage = useCallback(async () => {
     await near.contract.storage_withdraw({}, undefined, "1");
   }, [near]);
 
   const [showPretendModal, setShowPretendModal] = useState(false);
-
   return (
     <>
       <StyledDropdown className="dropdown" onMouseEnter={props.onMouseEnter}>
@@ -129,6 +123,7 @@ export function UserDropdown(props) {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
+          <Widget src={props.widgets.refMode}></Widget>
           <Widget
             src={props.widgets.profileImage}
             props={{
@@ -148,6 +143,9 @@ export function UserDropdown(props) {
           aria-labelledby="dropdownMenu2222"
           style={{ minWidth: "fit-content" }}
         >
+          <li style={{marginBottom: '10px'}}>
+           <Widget src={props.widgets.userBuilder} />
+          </li>
           <li>
             <NavLink
               className="dropdown-item"
