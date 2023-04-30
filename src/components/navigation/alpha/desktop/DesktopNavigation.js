@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { ShanShanLogo } from "../icons/Logo";
-import { Return } from "../icons/Return";
-import { NavigationButton } from "../NavigationButton";
-import { SignInButton } from "../SignInButton";
-import { UserDropdown } from "./UserDropdown";
-import { NavDropdownMenu } from "./nav_dropdown/NavDropdownMenu";
-import { NavDropdownButton } from "./NavDropdownButton";
-import { NotificationWidget } from "../NotificationWidget";
-import image from "../icons/search.svg";
-import { useHistory } from "react-router-dom";
-import { Widget, useNear, useAccount, useCache } from "near-social-vm";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { ShanShanLogo } from '../icons/Logo';
+import { Return } from '../icons/Return';
+import { NavigationButton } from '../NavigationButton';
+import { SignInButton } from '../SignInButton';
+import { UserDropdown } from './UserDropdown';
+import { NavDropdownMenu } from './nav_dropdown/NavDropdownMenu';
+import { NavDropdownButton } from './NavDropdownButton';
+import { NotificationWidget } from '../NotificationWidget';
+import image from '../icons/search.svg';
+import { useHistory } from 'react-router-dom';
+import { Widget, useNear, useAccount, useCache } from 'near-social-vm';
 
 const StyledNavigation = styled.div`
   position: sticky;
@@ -124,21 +124,22 @@ export function DesktopNavigation(props) {
   //     }
   //   })
   // }, [near, cache])
+
+  console.log(history.location.pathname, 'pathname');
+
   return (
     <StyledNavigation onMouseLeave={() => setMenuDropdown(false)}>
-      <div className="container">
+      <div className='container'>
         <ShanShanLogo />
-        <div className="form-wrapper">
+        <div className='form-wrapper'>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              history.push(
-                `/${props.widgets?.globalSearchPage}?term=${e.target[0].value}`
-              );
+              history.push(`/${props.widgets?.globalSearchPage}?term=${e.target[0].value}`);
             }}
           >
             <input
-              placeholder="Search"
+              placeholder='Search'
               style={{ backgroundImage: `url(${image})` }}
               onFocus={() => setSearchInputFocus(true)}
               onBlur={() => setSearchInputFocus(false)}
@@ -146,45 +147,39 @@ export function DesktopNavigation(props) {
           </form>
           {searchInputFocus && <Return />}
         </div>
-        <div className="navigation-section">
-          <NavigationButton
-            onMouseEnter={() => setMenuDropdown(false)}
-            route="/"
-          >
+        <div className='navigation-section'>
+          <NavigationButton onMouseEnter={() => setMenuDropdown(false)} route='/'>
             Home
           </NavigationButton>
-          <NavDropdownButton onMouseEnter={() => setMenuDropdown("discover")}>
+          <NavDropdownButton
+            onClick={() => {
+              history.push(`/${props.widgets?.componentsPage}`);
+            }}
+            onMouseEnter={() => setMenuDropdown('discover')}
+            style={{
+              color: history.location.pathname.includes(`/${props.widgets?.componentsPage}`) ? 'white' : '',
+            }}
+          >
             Discover
           </NavDropdownButton>
-          <Widget src="ref-admin.near/widget/wrap-code" props={{
-            code:<NavDropdownButton onMouseEnter={() => setMenuDropdown("develop")}>
-            Develop
-          </NavDropdownButton>
-          }}></Widget>
+          <Widget
+            src='ref-admin.near/widget/wrap-code'
+            props={{
+              code: <NavDropdownButton onMouseEnter={() => setMenuDropdown('develop')}>Develop</NavDropdownButton>,
+            }}
+          ></Widget>
         </div>
-        <div className="user-section">
-          {!props.signedIn && (
-            <SignInButton onSignIn={() => props.requestSignIn()} />
-          )}
+        <div className='user-section'>
+          {!props.signedIn && <SignInButton onSignIn={() => props.requestSignIn()} />}
           {props.signedIn && (
             <>
-              <NotificationWidget
-                notificationButtonSrc={props.widgets.notificationButton}
-                onMouseEnter={() => setMenuDropdown(false)}
-              />
-              <UserDropdown
-                {...props}
-                onMouseEnter={() => setMenuDropdown(false)}
-              />
+              <NotificationWidget notificationButtonSrc={props.widgets.notificationButton} onMouseEnter={() => setMenuDropdown(false)} />
+              <UserDropdown {...props} onMouseEnter={() => setMenuDropdown(false)} />
             </>
           )}
         </div>
       </div>
-      <NavDropdownMenu
-        {...props}
-        menuDropdown={menuDropdown}
-        onClickLink={() => setMenuDropdown(false)}
-      />
+      <NavDropdownMenu {...props} menuDropdown={menuDropdown} onClickLink={() => setMenuDropdown(false)} />
     </StyledNavigation>
   );
 }

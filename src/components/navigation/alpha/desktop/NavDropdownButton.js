@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledNavDropdownButton = styled.button`
   color: var(--slate-dark-11);
@@ -22,7 +22,7 @@ const StyledNavDropdownButton = styled.button`
 
 export function NavDropdownButton(props) {
   return (
-    <StyledNavDropdownButton onMouseEnter={props.onMouseEnter}>
+    <StyledNavDropdownButton onMouseEnter={props.onMouseEnter} {...props}>
       {props.children}
     </StyledNavDropdownButton>
   );
