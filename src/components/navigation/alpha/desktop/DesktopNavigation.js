@@ -10,7 +10,7 @@ import { NavDropdownMenu } from './nav_dropdown/NavDropdownMenu';
 import { NavDropdownButton } from './NavDropdownButton';
 import { NotificationWidget } from '../NotificationWidget';
 import image from '../icons/search.svg';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Widget, useNear, useAccount, useCache } from 'near-social-vm';
 
 const StyledNavigation = styled.div`
@@ -110,6 +110,7 @@ export function DesktopNavigation(props) {
   const [searchInputFocus, setSearchInputFocus] = useState(false);
   // const [refMode, setRefMode] = useState('');
   const history = useHistory();
+  const location = useLocation();
   const near = useNear();
   const cache = useCache();
   // useEffect(() => {
@@ -157,7 +158,7 @@ export function DesktopNavigation(props) {
             }}
             onMouseEnter={() => setMenuDropdown('discover')}
             style={{
-              color: history.location.pathname.includes(`/${props.widgets?.componentsPage}`) ? 'white' : '',
+              color: location.pathname.includes(`/${props.widgets?.componentsPage}`) ? 'white' : '',
             }}
           >
             Discover
