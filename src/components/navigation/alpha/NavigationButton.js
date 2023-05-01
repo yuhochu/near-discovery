@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink , useLocation} from "react-router-dom";
 
 const StyledNavigationButton = styled.div`
   a {
@@ -26,13 +26,16 @@ const StyledNavigationButton = styled.div`
 `;
 
 export function NavigationButton(props) {
+  const location = useLocation();
+  const isActive = location.pathname == props.route;
   return (
     <StyledNavigationButton
       onMouseEnter={props.onMouseEnter}
-      className={props.disabled ? "disabled" : ""}
+      className={`${props.disabled ? "disabled" : ""}`}
     >
       {props.route ? (
         <NavLink
+          className={`${isActive ? 'active': ''}`}
           onClick={(e) => {
             if (props.disabled) {
               e.preventDefault();
