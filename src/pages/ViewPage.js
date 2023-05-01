@@ -8,7 +8,6 @@ export default function ViewPage(props) {
   const query = useQuery();
 
   const list_tab = query.get('tab');
-  console.log('list_tab: ', list_tab);
 
   const [widgetProps, setWidgetProps] = useState({});
 
@@ -39,7 +38,10 @@ export default function ViewPage(props) {
               view: src,
             }
       );
-      window.location.replace('/#/' + src);
+
+      if (src === props.widgets.componentsPage) {
+        window.location.replace('/#/' + src);
+      }
       analytics('view', {
         props: {
           widget: src,
