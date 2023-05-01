@@ -39,9 +39,6 @@ export default function ViewPage(props) {
             }
       );
 
-      if (src === props.widgets.componentsPage) {
-        window.location.replace('/#/' + src);
-      }
       analytics('view', {
         props: {
           widget: src,
