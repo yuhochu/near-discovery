@@ -26,7 +26,7 @@ const TestnetWidgets = {
 
 const MainnetWidgets = {
   image: 'mob.near/widget/Image',
-  default: 'juaner.near/widget/ref-home',
+  default: 'ref-admin.near/widget/ref-shanshan-list',
   viewSource: 'mob.near/widget/WidgetSource',
   widgetMetadataEditor: 'ref-admin.near/widget/WidgetMetadataEditor',
   widgetMetadata: 'ref-admin.near/widget/WidgetMetadata',
