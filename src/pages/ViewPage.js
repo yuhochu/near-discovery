@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Widget } from "near-social-vm";
-import { useParams } from "react-router-dom";
-import { useQuery } from "../hooks/useQuery";
+import React, { useEffect, useState } from 'react';
+import { Widget } from 'near-social-vm';
+import { useParams, useLocation } from 'react-router-dom';
+import { useQuery } from '../hooks/useQuery';
 
 export default function ViewPage(props) {
   const { widgetSrc } = useParams();
   const query = useQuery();
+
+  const list_tab = query.get('tab');
+  console.log('list_tab: ', list_tab);
+
   const [widgetProps, setWidgetProps] = useState({});
 
   const src = widgetSrc || props.widgets.default;
   const setWidgetSrc = props.setWidgetSrc;
   const viewSourceWidget = props.widgets.viewSource;
+
+  useEffect(() => {
+    if (list_tab) {
+      setWidgetProps(Object.fromEntries([...query.entries()]));
+    }
+  }, [list_tab]);
 
   useEffect(() => {
     setWidgetProps(Object.fromEntries([...query.entries()]));
@@ -19,9 +29,9 @@ export default function ViewPage(props) {
   useEffect(() => {
     setTimeout(() => {
       setWidgetSrc(
-        src === viewSourceWidget && query.get("src")
+        src === viewSourceWidget && query.get('src')
           ? {
-              edit: query.get("src"),
+              edit: query.get('src'),
               view: null,
             }
           : {
@@ -29,7 +39,8 @@ export default function ViewPage(props) {
               view: src,
             }
       );
-      analytics("view", {
+      window.location.replace('/#/' + src);
+      analytics('view', {
         props: {
           widget: src,
         },
@@ -38,13 +49,13 @@ export default function ViewPage(props) {
   }, [src, query, setWidgetSrc, viewSourceWidget]);
 
   return (
-    <div className="container-xl">
-      <div className="row">
+    <div className='container-xl'>
+      <div className='row'>
         <div
-          className="d-inline-block position-relative overflow-hidden"
+          className='d-inline-block position-relative overflow-hidden'
           style={{
             // "--body-top-padding": "24px",
-            paddingTop: "var(--body-top-padding)",
+            paddingTop: 'var(--body-top-padding)',
           }}
         >
           <Widget
@@ -57,7 +68,7 @@ export default function ViewPage(props) {
               tosName: props.tos.contentComponentPath,
               canCustomHome: !widgetSrc,
             }}
-          />{" "}
+          />{' '}
         </div>
       </div>
     </div>

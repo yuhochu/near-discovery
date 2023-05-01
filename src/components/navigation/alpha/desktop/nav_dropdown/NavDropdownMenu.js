@@ -1,8 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { Widget } from "near-social-vm";
-import { NavDropdownMenuLinkList } from "./NavDropdownMenuLinkList";
-import { useParams } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Widget } from 'near-social-vm';
+import { NavDropdownMenuLinkList } from './NavDropdownMenuLinkList';
+import { useParams } from 'react-router-dom';
+import { TemplateIcon } from '../../../../icons/Template';
+import { ComponentIcon } from '../../../../icons/ComponentIcon';
+import { useHistory } from 'react-router-dom';
 
 const StyledNavDropdownMenu = styled.div`
   position: absolute;
@@ -70,41 +73,106 @@ const StyledNavDropdownMenu = styled.div`
 export function NavDropdownMenu(props) {
   const { widgetSrc } = useParams();
   return (
-    <StyledNavDropdownMenu className={props.menuDropdown ? "show" : ""}>
-      <div className="container">
-        <div className="section">
-          <div className="section-title">Current component</div>
-          <div className="current-app-wrapper">
+    <StyledNavDropdownMenu className={props.menuDropdown ? 'show' : ''}>
+      <div className='container'>
+        <div className='section'>
+          <div className='section-title'>Current component</div>
+          <div className='current-app-wrapper'>
             <Widget
               src={props.widgets.componentSummary}
               props={{
                 src: props.widgetSrc?.view,
-                size: "medium",
+                size: 'medium',
                 showTags: true,
                 canCustomHome: !widgetSrc,
               }}
             />
           </div>
         </div>
-        {props.menuDropdown === "discover" ? (
-          <div className="section">
-            <div className="section-title">Discover</div>
-            <NavDropdownMenuLinkList
-              category="discover"
-              onClick={props.onClickLink}
-              {...props}
-            />
+        {props.menuDropdown === 'discover' ? (
+          <div className='section'>
+            <div className='section-title'>Discover</div>
+            <NavDropdownMenuLinkList category='discover' onClick={props.onClickLink} {...props} />
           </div>
         ) : (
-          <div className="section">
-            <div className="section-title">Tools & Resources</div>
-            <NavDropdownMenuLinkList
-              category="tools"
-              onClick={props.onClickLink}
-            />
+          <div className='section'>
+            <div className='section-title'>Tools & Resources</div>
+            <NavDropdownMenuLinkList category='tools' onClick={props.onClickLink} />
           </div>
         )}
       </div>
     </StyledNavDropdownMenu>
+  );
+}
+
+const DiscoverNavDropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  color: white;
+  z-index: 50;
+
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  visibility: hidden;
+  padding-top: 10px;
+  top: 25px;
+  left: 0px;
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+  .container {
+    background: #183035;
+    border-radius: 10px;
+    padding: 18px 15px;
+    width: 207px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    .discover-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 10px 12px;
+      cursor: pointer;
+      :hover {
+        background-color: #202425;
+      }
+      border-radius: 10px;
+    }
+  }
+`;
+
+export function DiscoverDropdownMenu(props) {
+  const history = useHistory();
+
+  return (
+    <DiscoverNavDropdownMenu className={props.menuDropdown ? 'show' : ''}>
+      <div className='container'>
+        <div
+          className='discover-nav-item'
+          onClick={() => {
+            history.push(`/${props.widgets?.componentsPage}?tab=Templates`);
+          }}
+        >
+          <TemplateIcon></TemplateIcon>
+
+          <span>Template</span>
+        </div>
+
+        <div
+          className='discover-nav-item'
+          onClick={() => {
+            history.push(`/${props.widgets?.componentsPage}?tab=Components`);
+          }}
+        >
+          <ComponentIcon></ComponentIcon>
+
+          <span>Components</span>
+        </div>
+      </div>
+    </DiscoverNavDropdownMenu>
   );
 }

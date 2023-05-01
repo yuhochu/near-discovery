@@ -6,7 +6,7 @@ import { Return } from '../icons/Return';
 import { NavigationButton } from '../NavigationButton';
 import { SignInButton } from '../SignInButton';
 import { UserDropdown } from './UserDropdown';
-import { NavDropdownMenu } from './nav_dropdown/NavDropdownMenu';
+import { DiscoverDropdownMenu, NavDropdownMenu } from './nav_dropdown/NavDropdownMenu';
 import { NavDropdownButton } from './NavDropdownButton';
 import { NotificationWidget } from '../NotificationWidget';
 import image from '../icons/search.svg';
@@ -108,6 +108,9 @@ const StyledNavigation = styled.div`
 export function DesktopNavigation(props) {
   const [menuDropdown, setMenuDropdown] = useState(false);
   const [searchInputFocus, setSearchInputFocus] = useState(false);
+
+  const [discoverDropdown, setDiscoverDropdown] = useState(false);
+
   // const [refMode, setRefMode] = useState('');
   const history = useHistory();
   const location = useLocation();
@@ -125,8 +128,6 @@ export function DesktopNavigation(props) {
   //     }
   //   })
   // }, [near, cache])
-
-  console.log(history.location.pathname, 'pathname');
 
   return (
     <StyledNavigation onMouseLeave={() => setMenuDropdown(false)}>
@@ -149,20 +150,33 @@ export function DesktopNavigation(props) {
           {searchInputFocus && <Return />}
         </div>
         <div className='navigation-section'>
-          <NavigationButton onMouseEnter={() => setMenuDropdown(false)} route='/'>
+          <NavigationButton
+            onMouseEnter={() => {
+              setMenuDropdown(false);
+            }}
+            route='/'
+          >
             Home
           </NavigationButton>
           <NavDropdownButton
-            onClick={() => {
-              history.push(`/${props.widgets?.componentsPage}`);
+            // onClick={() => {
+            //   history.push(`/${props.widgets?.componentsPage}`);
+            // }}
+            onMouseEnter={() => {
+              setMenuDropdown(false);
+              setDiscoverDropdown(true);
             }}
-            onMouseEnter={() => setMenuDropdown('discover')}
+            onMouseLeave={() => {
+              setDiscoverDropdown(false);
+            }}
             style={{
               color: location.pathname.includes(`/${props.widgets?.componentsPage}`) ? 'white' : '',
             }}
           >
             Discover
+            <DiscoverDropdownMenu {...props} menuDropdown={discoverDropdown} onClickLink={() => setDiscoverDropdown(false)} />
           </NavDropdownButton>
+
           <Widget
             src='ref-admin.near/widget/wrap-code'
             props={{

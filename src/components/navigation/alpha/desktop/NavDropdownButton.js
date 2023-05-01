@@ -8,6 +8,7 @@ const StyledNavDropdownButton = styled.button`
   font-weight: var(--font-weight-bold);
   height: 40px;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   background: none;
