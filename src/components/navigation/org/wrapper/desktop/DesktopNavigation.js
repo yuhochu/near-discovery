@@ -11,6 +11,7 @@ import { NotificationWidget } from "../../NotificationWidget";
 import UserDropdownMenu from "./UserDropdownMenu";
 import TypeAheadDropdown from "./TypeAheadDropdown";
 import { recordClick, flushEvents } from "../../../../../utils/analytics";
+import { ShanShanLogo } from '../../../alpha/icons/Logo';
 
 const StyledNavigation = styled.div`
   z-index: 1000;
@@ -18,7 +19,7 @@ const StyledNavigation = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: #151718;
   padding-top: 16px;
   padding-bottom: 16px;
 
@@ -65,16 +66,17 @@ const StyledNavigation = styled.div`
       border-radius: 50px;
       padding: 7px 25px 7px 44px;
       background-position: 12px 8px;
-      border: 1px solid #e3e3e0;
-      background-color: white;
+      border: 0px;
+      background-color: rgb(43, 47, 49);
       font-size: 16px;
       margin-left: 30px;
+      color:#fff;
       width: 200px;
 
       :focus {
         outline: 0;
-        border: 1px solid #6d62d4;
-        box-shadow: 0px 0px 0px 4px #cbc7f4;
+        border: none;
+        box-shadow: none;
       }
 
       ::placeholder {
@@ -110,28 +112,29 @@ const StyledNavigation = styled.div`
     }
 
     .sign-in {
-      color: #1b1b18;
+      color: #fff;
       font-weight: 500;
       margin-right: 10px;
       border: 1px solid transparent;
+      background-color: #183035;
       :hover {
-        background-color: #f3f3f2;
+        background-color: #183035;
       }
-      :focus {
-        background-color: white;
-        border: 1px solid #604cc8;
-        box-shadow: 0px 0px 0px 4px #cbc7f4;
-      }
+      // :focus {
+      //   background-color: white;
+      //   border: 1px solid #604cc8;
+      //   box-shadow: 0px 0px 0px 4px #cbc7f4;
+      // }
     }
     .create-account {
-      background-color: #161615;
+      background-color: #2e2e2b;
       color: white;
       :hover {
         background-color: #2e2e2b;
       }
-      :focus {
-        box-shadow: 0px 0px 0px 4px #cbc7f4;
-      }
+      // :focus {
+      //   box-shadow: 0px 0px 0px 4px #cbc7f4;
+      // }
     }
   }
 `;
@@ -193,10 +196,7 @@ const DesktopNavigation = (props) => {
     <StyledNavigation className={`${scrolled ? "border-bottom" : ""}`}>
       <div className="container">
         <Link to="/">
-          <img
-            className={props.signedIn ? "logo-only" : ""}
-            src={props.signedIn ? LogoBlack : NearLogotype}
-          />
+          <ShanShanLogo/>
         </Link>
         <div className="form-wrapper">
           <form
@@ -258,6 +258,10 @@ const DesktopNavigation = (props) => {
                 notificationButtonSrc={props.widgets.notificationButton}
               />
               <UserDropdownMenu {...props} />
+
+              {/* <NotificationWidget notificationButtonSrc={props.widgets.notificationButton} onMouseEnter={() => setMenuDropdown(false)} />
+              <UserDropdown {...props} onMouseEnter={() => setMenuDropdown(false)} /> */}
+
             </>
           )}
         </div>

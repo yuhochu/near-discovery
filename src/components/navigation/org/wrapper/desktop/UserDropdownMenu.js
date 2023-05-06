@@ -6,24 +6,29 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const StyledDropdown = styled.div`
+background: #183035;
+border-radius: 10px;
   > button {
     all: unset;
     display: flex;
     align-items: center;
-    border-radius: 50px;
-    background-color: #161615;
-    padding: 4px;
+    padding: 6px;
   }
   .d-inline-block {
     width: unset !important;
     height: unset !important;
+    margin-left:8px;
     img {
       border-radius: 50% !important;
-      width: 38px !important;
-      height: 38px !important;
+      width: 28px !important;
+      height: 28px !important;
     }
   }
-
+  .ph-caret-down::before{
+    // color:#ecedee;
+    font-size:14px;
+    font-weight:bold;
+  }
   i {
     color: #a1a09a;
     margin: 0 5px 0 0;
@@ -33,7 +38,7 @@ const StyledDropdown = styled.div`
     margin: 0 8px;
     line-height: normal;
     max-width: 110px;
-    font-size: 12px;
+    font-size: 14px;
 
     .profile-name,
     .profile-username {
@@ -63,6 +68,7 @@ const UserDropdownMenu = (props) => {
     <StyledDropdown>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
+        <Widget src={props.widgets.refMode}></Widget>
           <Widget
             src={props.widgets.profileImage}
             props={{
@@ -81,6 +87,11 @@ const UserDropdownMenu = (props) => {
 
         <DropdownMenu.Portal className="hello-there">
           <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
+            <DropdownMenu.Item
+              className="DropdownMenuItem"
+            >
+              <Widget src={props.widgets.userBuilder} />
+            </DropdownMenu.Item>
             <DropdownMenu.Item
               className="DropdownMenuItem"
               onClick={() =>

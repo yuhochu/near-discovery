@@ -4,11 +4,12 @@ import { Widget } from "near-social-vm";
 
 const StyledNotificationWidget = styled.div`
   margin: 0 15px;
-  border: 0.5px solid #e3e3e0;
-  background-color: #f3f3f2;
-  height: 46px;
-  width: 46px;
+  // border: 0.5px solid #e3e3e0;
+  background-color: #2b2f31;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
+  cursor:pointer;
 
   > div,
   a {
@@ -17,21 +18,14 @@ const StyledNotificationWidget = styled.div`
   }
 
   a {
-    color: #1b1b18 !important;
-    background-color: #f3f3f2 !important;
+    color: #fff !important;
+    // background-color: #f3f3f2 !important;
     display: flex;
     align-items: center;
     justify-content: center;
 
     i {
       font-size: 18px !important;
-    }
-  }
-
-  :hover {
-    a,
-    i {
-      color: white;
     }
   }
 `;

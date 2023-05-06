@@ -1,6 +1,6 @@
 .DropdownMenuContent {
-  min-width: 220px;
-  background-color: #161615;
+  min-width: 240px;
+  background-color: #183035;
   border-radius: 6px;
   margin-top: 11px;
   padding: 5px;
@@ -26,15 +26,14 @@
 
 .DropdownMenuItem {
   all: unset;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
-  color: #9ba1a6;
+  color: #fff;
   border-radius: 3px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 12px;
   position: relative;
-  padding-left: 25px;
   user-select: none;
   outline: none;
 }
