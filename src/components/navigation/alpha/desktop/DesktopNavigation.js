@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,23 @@ import { NotificationWidget } from '../NotificationWidget';
 import image from '../icons/search.svg';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Widget, useNear, useAccount, useCache } from 'near-social-vm';
+=======
+import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
+import { Logo } from "../icons/Logo";
+import { NavDropdownButton } from "./NavDropdownButton";
+import { NavDropdownMenu } from "./nav_dropdown/NavDropdownMenu";
+import { NavigationButton } from "../NavigationButton";
+import { NotificationWidget } from "../NotificationWidget";
+import { Return } from "../icons/Return";
+import { SignInButton } from "../SignInButton";
+import { UserDropdown } from "./UserDropdown";
+import image from "../icons/search.svg";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { recordEvent } from "../../../../../utils/analytics";
+>>>>>>> main
 
 const StyledNavigation = styled.div`
   position: sticky;
@@ -137,13 +155,22 @@ export function DesktopNavigation(props) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+<<<<<<< HEAD
               history.push(`/${props.widgets?.globalSearchPage}?term=${e.target[0].value}`);
+=======
+              history.push(
+                `/${props.widgets?.search.indexPage}?term=${e.target[0].value}`
+              );
+>>>>>>> main
             }}
           >
             <input
               placeholder='Search'
               style={{ backgroundImage: `url(${image})` }}
-              onFocus={() => setSearchInputFocus(true)}
+              onFocus={() => {
+                setSearchInputFocus(true);
+                recordEvent("click-navigation-search");
+              }}
               onBlur={() => setSearchInputFocus(false)}
             />
           </form>
@@ -184,8 +211,19 @@ export function DesktopNavigation(props) {
             }}
           ></Widget>
         </div>
+<<<<<<< HEAD
         <div className='user-section'>
           {!props.signedIn && <SignInButton onSignIn={() => props.requestSignIn()} />}
+=======
+        <div className="user-section">
+
+          {!props.signedIn && (
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <SignInButton onSignIn={() => history.push('/signup')} > Sign Up</SignInButton>
+              <SignInButton onSignIn={() => props.requestSignIn()}> Sign In</SignInButton>
+            </div>
+          )}
+>>>>>>> main
           {props.signedIn && (
             <>
               <NotificationWidget notificationButtonSrc={props.widgets.notificationButton} onMouseEnter={() => setMenuDropdown(false)} />
