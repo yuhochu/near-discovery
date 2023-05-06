@@ -1,24 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import ls from "local-storage";
-import prettier from "prettier";
-import parserBabel from "prettier/parser-babel";
-import { useHistory, useParams } from "react-router-dom";
-import Editor from "@monaco-editor/react";
-import {
-  Widget,
-  useCache,
-  useNear,
-  CommitButton,
-  useAccountId,
-} from "near-social-vm";
-import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
-import RenameModal from "../components/Editor/RenameModal";
-import OpenModal from "../components/Editor/OpenModal";
-import AddModal from "../components/Editor/AddModal";
-import CreateModal from "../components/Editor/CreateModal";
-import { SaveDraftModal } from "../components/SaveDraft";
-import styled from "styled-components";
-import VsCodeBanner from "../components/Editor/VsCodeBanner";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import ls from 'local-storage';
+import prettier from 'prettier';
+import parserBabel from 'prettier/parser-babel';
+import { useHistory, useParams } from 'react-router-dom';
+import Editor from '@monaco-editor/react';
+import { Widget, useCache, useNear, CommitButton, useAccountId } from 'near-social-vm';
+import { Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import RenameModal from './EditorPage/Modals/RenameModal';
+import OpenModal from './EditorPage/Modals/OpenModal';
+import AddModal from './EditorPage/Modals/AddModal';
+import CreateModal from './EditorPage/Modals/CreateModal';
+import { SaveDraftModal } from './EditorPage/Modals/SaveDraft';
+import styled from 'styled-components';
 
 const TopMenu = styled.div`
   border-radius: 0.375rem;
@@ -124,35 +117,35 @@ const Container = styled.div`
 `;
 
 const StorageDomain = {
-  page: "editor",
+  page: 'editor',
 };
 
 const StorageType = {
-  Code: "code",
-  Files: "files",
+  Code: 'code',
+  Files: 'files',
 };
 
 const Filetype = {
-  Widget: "widget",
-  Module: "module",
+  Widget: 'widget',
+  Module: 'module',
 };
 
-const LsKey = "social.near:v01:";
-const EditorLayoutKey = LsKey + "editorLayout:";
-const WidgetPropsKey = LsKey + "widgetProps:";
+const LsKey = 'social.near:v01:';
+const EditorLayoutKey = LsKey + 'editorLayout:';
+const WidgetPropsKey = LsKey + 'widgetProps:';
 
-const DefaultEditorCode = "return <div>Hello World</div>;";
+const DefaultEditorCode = 'return <div>Hello World</div>;';
 
 const Tab = {
-  Editor: "Editor",
-  Props: "Props",
-  Metadata: "Metadata",
-  Widget: "Widget",
+  Editor: 'Editor',
+  Props: 'Props',
+  Metadata: 'Metadata',
+  Widget: 'Widget',
 };
 
 const Layout = {
-  Tabs: "Tabs",
-  Split: "Split",
+  Tabs: 'Tabs',
+  Split: 'Split',
 };
 
 export default function EditorPage(props) {
@@ -173,9 +166,7 @@ export default function EditorPage(props) {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const [renderCode, setRenderCode] = useState(code);
-  const [widgetProps, setWidgetProps] = useState(
-    ls.get(WidgetPropsKey) || "{}"
-  );
+  const [widgetProps, setWidgetProps] = useState(ls.get(WidgetPropsKey) || '{}');
   const [parsedWidgetProps, setParsedWidgetProps] = useState({});
   const [propsError, setPropsError] = useState(null);
   const [metadata, setMetadata] = useState(undefined);
@@ -188,9 +179,7 @@ export default function EditorPage(props) {
   const accountId = useAccountId();
 
   const [tab, setTab] = useState(Tab.Editor);
-  const [layout, setLayoutState] = useState(
-    ls.get(EditorLayoutKey) || Layout.Tabs
-  );
+  const [layout, setLayoutState] = useState(ls.get(EditorLayoutKey) || Layout.Tabs);
 
   const setLayout = useCallback(
     (layout) => {
@@ -210,15 +199,8 @@ export default function EditorPage(props) {
   useEffect(() => {
     const widgetSrc = `${accountId}/widget/${widgetName}/**`;
     const fetchCodeAndDraftOnChain = () => {
-      const widgetCode = cache.socialGet(
-        near,
-        widgetSrc,
-        false,
-        undefined,
-        undefined,
-        fetchCodeAndDraftOnChain
-      );
-      if (widgetCode?.branch?.draft?.[""]) {
+      const widgetCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, fetchCodeAndDraftOnChain);
+      if (widgetCode?.branch?.draft?.['']) {
         setMetadata(widgetCode?.branch?.draft?.metadata);
       } else {
         setMetadata(widgetCode?.metadata);
@@ -248,17 +230,10 @@ export default function EditorPage(props) {
   useEffect(() => {
     const widgetSrc = `${accountId}/widget/${widgetName}/**`;
     const fetchCodeAndDraftOnChain = () => {
-      const widgetCode = cache.socialGet(
-        near,
-        widgetSrc,
-        false,
-        undefined,
-        undefined,
-        fetchCodeAndDraftOnChain
-      );
+      const widgetCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, fetchCodeAndDraftOnChain);
 
-      setCodeOnChain(widgetCode?.[""]);
-      setDraftOnChain(widgetCode?.branch?.draft?.[""]);
+      setCodeOnChain(widgetCode?.['']);
+      setDraftOnChain(widgetCode?.branch?.draft?.['']);
     };
     fetchCodeAndDraftOnChain();
   }, [code]);
@@ -280,17 +255,10 @@ export default function EditorPage(props) {
     files.forEach((f) => {
       const widgetSrc = `${accountId}/widget/${f.name}/**`;
       const fetchCodeAndDraftOnChain = () => {
-        const widgetCode = cache.socialGet(
-          near,
-          widgetSrc,
-          false,
-          undefined,
-          undefined,
-          fetchCodeAndDraftOnChain
-        );
+        const widgetCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, fetchCodeAndDraftOnChain);
 
-        const mainCode = widgetCode?.[""];
-        const draft = widgetCode?.branch?.draft?.[""];
+        const mainCode = widgetCode?.[''];
+        const draft = widgetCode?.branch?.draft?.[''];
         const isDraft = (!draft && !mainCode) || draft;
         const path = f;
         setFilesDetails(
@@ -298,8 +266,7 @@ export default function EditorPage(props) {
             f.name,
             JSON.parse(
               JSON.stringify({
-                codeChangesPresent: filesDetails.get(f.name)
-                  ?.codeChangesPresent,
+                codeChangesPresent: filesDetails.get(f.name)?.codeChangesPresent,
                 isDraft,
               })
             )
@@ -314,18 +281,11 @@ export default function EditorPage(props) {
     files.forEach((f) => {
       const widgetSrc = `${accountId}/widget/${f.name}/**`;
       const fetchCodeAndDraftOnChain = () => {
-        const widgetCode = cache.socialGet(
-          near,
-          widgetSrc,
-          false,
-          undefined,
-          undefined,
-          fetchCodeAndDraftOnChain
-        );
+        const widgetCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, fetchCodeAndDraftOnChain);
 
-        const mainCode = widgetCode?.[""];
+        const mainCode = widgetCode?.[''];
 
-        const draft = widgetCode?.branch?.draft?.[""];
+        const draft = widgetCode?.branch?.draft?.[''];
         const path = f;
 
         cache
@@ -358,17 +318,10 @@ export default function EditorPage(props) {
   const checkHasCodeChangeSingleFile = (code) => {
     const widgetSrc = `${accountId}/widget/${widgetName}/**`;
     const fetchCodeAndDraftOnChain = () => {
-      const widgetCode = cache.socialGet(
-        near,
-        widgetSrc,
-        false,
-        undefined,
-        undefined,
-        fetchCodeAndDraftOnChain
-      );
+      const widgetCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, fetchCodeAndDraftOnChain);
 
-      const mainCode = widgetCode?.[""];
-      const draft = widgetCode?.branch?.draft?.[""];
+      const mainCode = widgetCode?.[''];
+      const draft = widgetCode?.branch?.draft?.[''];
       let hasCodeChanged;
       if (draft) {
         hasCodeChanged = draft != code;
@@ -416,9 +369,7 @@ export default function EditorPage(props) {
   const removeFromFiles = useCallback(
     (path) => {
       path = JSON.stringify(path);
-      setFiles((files) =>
-        files.filter((file) => JSON.stringify(file) !== path)
-      );
+      setFiles((files) => files.filter((file) => JSON.stringify(file) !== path));
       setLastPath(path);
     },
     [setFiles, setLastPath]
@@ -479,10 +430,7 @@ export default function EditorPage(props) {
   );
 
   const toPath = useCallback((type, nameOrPath) => {
-    const name =
-      nameOrPath.indexOf("/") >= 0
-        ? nameOrPath.split("/").slice(2).join("/")
-        : nameOrPath;
+    const name = nameOrPath.indexOf('/') >= 0 ? nameOrPath.split('/').slice(2).join('/') : nameOrPath;
     return { type, name };
   }, []);
 
@@ -494,14 +442,7 @@ export default function EditorPage(props) {
       const widgetSrc = `${accountId}/widget/${widgetName}/branch/draft`;
 
       const c = () => {
-        const draftCode = cache.socialGet(
-          near,
-          widgetSrc,
-          false,
-          undefined,
-          undefined,
-          c
-        );
+        const draftCode = cache.socialGet(near, widgetSrc, false, undefined, undefined, c);
         openFile(toPath(Filetype.Widget, widgetSrc), draftCode || code);
       };
 
@@ -516,25 +457,15 @@ export default function EditorPage(props) {
         return;
       }
 
-      let widgetSrc =
-        nameOrPath.indexOf("/") >= 0
-          ? nameOrPath
-          : `${accountId}/widget/${nameOrPath}`;
+      let widgetSrc = nameOrPath.indexOf('/') >= 0 ? nameOrPath : `${accountId}/widget/${nameOrPath}`;
 
       const widget = `${widgetSrc}/**`;
 
       const c = () => {
-        const code = cache.socialGet(
-          near,
-          widget,
-          false,
-          undefined,
-          undefined,
-          c
-        );
+        const code = cache.socialGet(near, widget, false, undefined, undefined, c);
 
-        const mainCode = code?.[""];
-        const draftCode = code?.branch?.draft?.[""];
+        const mainCode = code?.[''];
+        const draftCode = code?.branch?.draft?.[''];
         const currentCode = draftCode || mainCode;
 
         if (currentCode) {
@@ -585,9 +516,7 @@ export default function EditorPage(props) {
       const jNewPath = JSON.stringify(newPath);
       const jPath = JSON.stringify(path);
       setFiles((files) => {
-        const newFiles = files.filter(
-          (file) => JSON.stringify(file) !== jNewPath
-        );
+        const newFiles = files.filter((file) => JSON.stringify(file) !== jNewPath);
         const i = newFiles.findIndex((file) => JSON.stringify(file) === jPath);
         if (i >= 0) {
           newFiles[i] = newPath;
@@ -602,13 +531,11 @@ export default function EditorPage(props) {
   );
 
   useEffect(() => {
-    cache
-      .asyncLocalStorageGet(StorageDomain, { type: StorageType.Files })
-      .then((value) => {
-        const { files, lastPath } = value || {};
-        setFiles(files || []);
-        setLastPath(lastPath);
-      });
+    cache.asyncLocalStorageGet(StorageDomain, { type: StorageType.Files }).then((value) => {
+      const { files, lastPath } = value || {};
+      setFiles(files || []);
+      setLastPath(lastPath);
+    });
   }, [cache]);
 
   useEffect(() => {
@@ -616,12 +543,12 @@ export default function EditorPage(props) {
       return;
     }
     if (widgetSrc) {
-      if (widgetSrc === "new") {
+      if (widgetSrc === 'new') {
         createFile(Filetype.Widget);
       } else {
         loadFile(widgetSrc);
       }
-      analytics("edit", {
+      analytics('edit', {
         props: {
           widget: widgetSrc,
         },
@@ -640,7 +567,7 @@ export default function EditorPage(props) {
     (path, code) => {
       try {
         const formattedCode = prettier.format(code, {
-          parser: "babel",
+          parser: 'babel',
           plugins: [parserBabel],
         });
         updateCode(path, formattedCode);
@@ -663,7 +590,7 @@ export default function EditorPage(props) {
     [setWidgetProps]
   );
 
-  const layoutClass = layout === Layout.Split ? "col-lg-6" : "";
+  const layoutClass = layout === Layout.Split ? 'col-lg-6' : '';
 
   const onLayoutChange = useCallback(
     (e) => {
@@ -676,7 +603,7 @@ export default function EditorPage(props) {
     [setLayout, tab, setTab]
   );
 
-  const widgetName = path?.name?.split("/")[0];
+  const widgetName = path?.name?.split('/')[0];
   const widgetPathName = path?.name;
   // const isDraft = path?.name?.split("/")[2] === "draft";
 
@@ -685,7 +612,7 @@ export default function EditorPage(props) {
 
   const createOpenDraftButton = (
     <button
-      className="btn btn-primary"
+      className='btn btn-primary'
       onClick={(e) => {
         openDraft(widgetName);
       }}
@@ -702,11 +629,11 @@ export default function EditorPage(props) {
       data={{
         widget: {
           [widgetName]: {
-            "": code,
+            '': code,
             metadata,
             branch: {
               draft: {
-                "": null,
+                '': null,
                 metadata: null,
               },
             },
@@ -720,7 +647,7 @@ export default function EditorPage(props) {
 
   const saveDraftButton = (
     <button
-      className="btn btn-custom-primary me-2"
+      className='btn btn-custom-primary me-2'
       disabled={!widgetName}
       onClick={(e) => {
         e.preventDefault();
@@ -739,7 +666,7 @@ export default function EditorPage(props) {
       data={{
         widget: {
           [widgetName]: {
-            "": code,
+            '': code,
             metadata,
           },
         },
@@ -751,7 +678,7 @@ export default function EditorPage(props) {
 
   const renderPreviewButton = (
     <button
-      className="btn btn-custom-primary"
+      className='btn btn-custom-primary'
       onClick={() => {
         setRenderCode(code);
         if (layout === Layout.Tabs) {
@@ -780,21 +707,18 @@ export default function EditorPage(props) {
     <div
       onClick={() => setShowAddModal(true)}
       style={{
-        display: "flex",
-        alignItems: "center",
-        color: "#fff",
-        fontWeight: "500",
-        fontSize: "14px",
-        height: "40px",
-        cursor: "pointer",
-        marginRight: "20px",
+        display: 'flex',
+        alignItems: 'center',
+        color: '#fff',
+        fontWeight: '500',
+        fontSize: '14px',
+        height: '40px',
+        cursor: 'pointer',
+        marginRight: '20px',
       }}
     >
       Add
-      <i
-        className="bi bi-plus"
-        style={{ fontSize: "20px", fontWeight: "500" }}
-      ></i>
+      <i className='bi bi-plus' style={{ fontSize: '20px', fontWeight: '500' }}></i>
     </div>
   );
 
@@ -811,32 +735,27 @@ export default function EditorPage(props) {
     <div
       onClick={() => setShowRenameModal(true)}
       style={{
-        display: "flex",
-        alignItems: "center",
-        color: "#fff",
-        fontWeight: "500",
-        fontSize: "14px",
-        height: "40px",
-        cursor: "pointer",
+        display: 'flex',
+        alignItems: 'center',
+        color: '#fff',
+        fontWeight: '500',
+        fontSize: '14px',
+        height: '40px',
+        cursor: 'pointer',
       }}
     >
       Edit
-      <i
-        className="bi bi-pen"
-        style={{ fontSize: "12px", fontWeight: "500", marginLeft: "5px" }}
-      ></i>
+      <i className='bi bi-pen' style={{ fontSize: '12px', fontWeight: '500', marginLeft: '5px' }}></i>
     </div>
   );
 
   const openInNewTabButton = (
     <a
-      className="btn me-2 btn-custom-primary"
-      style={{ height: "38px" }}
-      href={`#/${widgetPath}${
-        filesDetails.get(widgetName)?.isDraft ? "/branch/draft" : ""
-      }`}
-      target="_blank"
-      rel="noopener noreferrer"
+      className='btn me-2 btn-custom-primary'
+      style={{ height: '38px' }}
+      href={`#/${widgetPath}${filesDetails.get(widgetName)?.isDraft ? '/branch/draft' : ''}`}
+      target='_blank'
+      rel='noopener noreferrer'
     >
       Open Component
     </a>
@@ -844,9 +763,9 @@ export default function EditorPage(props) {
 
   const forkButton = (
     <button
-      className="btn btn-custom-primary me-2"
+      className='btn btn-custom-primary me-2'
       onClick={() => {
-        const forkName = widgetName + "-fork";
+        const forkName = widgetName + '-fork';
         openFile(toPath(Filetype.Widget, forkName), code);
       }}
     >
@@ -856,56 +775,41 @@ export default function EditorPage(props) {
 
   const showEditor = !(files?.length === 1 && files[0]?.unnamed === true);
   const OpenButtonIcon = (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        d="M5.09411 0.4668C3.48623 2.66122 1.87845 4.85542 0.270465 7.04958C-0.301894 7.83094 0.233009 8.95701 1.17669 8.95701H10.8236C11.7672 8.95701 12.3022 7.83094 11.7295 7.04958C10.1219 4.85542 8.51384 2.66126 6.90606 0.4668C6.44999 -0.1556 5.55032 -0.1556 5.09411 0.4668ZM0.751334 11.9861H10.3913C10.7746 11.9861 11.5722 12.1064 11.8719 11.6394C12.2055 11.12 11.8486 10.4239 11.2489 10.4239H1.60899C1.22547 10.4239 0.428086 10.3038 0.127975 10.7709C-0.205466 11.29 0.151429 11.9861 0.751334 11.9861Z"
-        fill="white"
+        d='M5.09411 0.4668C3.48623 2.66122 1.87845 4.85542 0.270465 7.04958C-0.301894 7.83094 0.233009 8.95701 1.17669 8.95701H10.8236C11.7672 8.95701 12.3022 7.83094 11.7295 7.04958C10.1219 4.85542 8.51384 2.66126 6.90606 0.4668C6.44999 -0.1556 5.55032 -0.1556 5.09411 0.4668ZM0.751334 11.9861H10.3913C10.7746 11.9861 11.5722 12.1064 11.8719 11.6394C12.2055 11.12 11.8486 10.4239 11.2489 10.4239H1.60899C1.22547 10.4239 0.428086 10.3038 0.127975 10.7709C-0.205466 11.29 0.151429 11.9861 0.751334 11.9861Z'
+        fill='white'
       />
     </svg>
   );
   return (
     <>
-      <div
-        className={`text-center d-flex justify-content-center min-vh-100 ${
-          showEditor ? `visually-hidden` : ``
-        }`}
-      >
+      <div className={`text-center d-flex justify-content-center min-vh-100 ${showEditor ? `visually-hidden` : ``}`}>
         <div
-          className="container-fluid mt-5"
+          className='container-fluid mt-5'
           style={{
-            width: "460px",
+            width: '460px',
           }}
         >
-          <h4 style={{ lineHeight: "50px" }} class="text-secondary">
+          <h4 style={{ lineHeight: '50px' }} class='text-secondary'>
             Welcome to the Component Sandbox!
           </h4>
-          <p className="text-secondary">
-            Use this sandbox to create, inspect, modify, and compose components
-            to create new experiences on NEAR.
-          </p>
-          <div className="d-flex justify-content-center mt-5">
+          <p className='text-secondary'>Use this sandbox to create, inspect, modify, and compose components to create new experiences on NEAR.</p>
+          <div className='d-flex justify-content-center mt-5'>
             <button
-              className="btn btn-outline-success mb-3"
-              style={{ width: "250px" }}
+              className='btn btn-outline-success mb-3'
+              style={{ width: '250px' }}
               onClick={() => (setShowAddModal(false), setShowOpenModal(true))}
             >
               Open Component
             </button>
           </div>
-          <div className="w-100 text-center text-secondary mb-3">or</div>
-          <div className="d-flex justify-content-center">
+          <div className='w-100 text-center text-secondary mb-3'>or</div>
+          <div className='d-flex justify-content-center'>
             <button
-              className="btn btn-success mb-4"
-              style={{ width: "250px" }}
-              onClick={() => (
-                setShowAddModal(false), createNewFile(Filetype.Widget)
-              )}
+              className='btn btn-success mb-4'
+              style={{ width: '250px' }}
+              onClick={() => (setShowAddModal(false), createNewFile(Filetype.Widget))}
             >
               Create New Component
             </button>
@@ -916,7 +820,7 @@ export default function EditorPage(props) {
         <div className={showEditor ? `` : `visually-hidden`}>
           {/* <VsCodeBanner /> */}
 
-          <div className="container-fluid mt-1">
+          <div className='container-fluid mt-1'>
             <RenameModal
               key={`rename-modal-${jpath}`}
               show={showRenameModal}
@@ -924,19 +828,11 @@ export default function EditorPage(props) {
               onRename={(newName) => renameFile(newName, code)}
               onHide={() => setShowRenameModal(false)}
             />
-            <OpenModal
-              show={showOpenModal}
-              onOpen={(newName) => loadFile(newName)}
-              onHide={() => setShowOpenModal(false)}
-            />
+            <OpenModal show={showOpenModal} onOpen={(newName) => loadFile(newName)} onHide={() => setShowOpenModal(false)} />
             <AddModal
               show={showAddModal}
               onOpen={() => (setShowAddModal(false), setShowOpenModal(true))}
-              onNew={() => (
-                setShowAddModal(false),
-                setShowRenameModal(true),
-                createNewFile(Filetype.Widget)
-              )}
+              onNew={() => (setShowAddModal(false), setShowRenameModal(true), createNewFile(Filetype.Widget))}
               onHide={() => setShowAddModal(false)}
             />
             <CreateModal
@@ -956,44 +852,34 @@ export default function EditorPage(props) {
               code={code}
               metadata={metadata}
             />
-            <div className="">
-              <div className="w-100 d-flex " style={{ flexWrap: "nowrap" }}>
-                <div className="d-flex" style={{ flexWrap: "wrap" }}>
-                  <Nav
-                    variant="pills mb-2 mt-2"
-                    activeKey={jpath}
-                    onSelect={(key) => openFile(JSON.parse(key))}
-                  >
+            <div className=''>
+              <div className='w-100 d-flex ' style={{ flexWrap: 'nowrap' }}>
+                <div className='d-flex' style={{ flexWrap: 'wrap' }}>
+                  <Nav variant='pills mb-2 mt-2' activeKey={jpath} onSelect={(key) => openFile(JSON.parse(key))}>
                     {files?.map((p, idx) => {
                       if (p.unnamed) {
                         return;
                       }
 
                       const jp = JSON.stringify(p);
-                      const widgetName = p?.name?.split("/")[0];
-                      const { codeChangesPresent, isDraft } =
-                        filesDetails.get(widgetName) || {};
+                      const widgetName = p?.name?.split('/')[0];
+                      const { codeChangesPresent, isDraft } = filesDetails.get(widgetName) || {};
 
                       return (
                         <Nav.Item key={jp}>
                           <TopMenu>
-                            <Nav.Link
-                              className="text-decoration-none d-flex "
-                              eventKey={jp}
-                            >
-                              <div className="d-flex tabName">
+                            <Nav.Link className='text-decoration-none d-flex ' eventKey={jp}>
+                              <div className='d-flex tabName'>
                                 {/* X1 */}
-                                {isDraft && <div className="draft">Draft</div>}
+                                {isDraft && <div className='draft'>Draft</div>}
                                 <div>{widgetName}</div>
-                                {codeChangesPresent && (
-                                  <div className="dot"></div>
-                                )}
+                                {codeChangesPresent && <div className='dot'></div>}
                               </div>
                               <button
                                 className={`close btn btn-lg border-0 py-0 px-1 ms-1 rounded-circle btn-outline-secondary`}
                                 style={{
-                                  marginTop: "-3px",
-                                  marginBottom: "0px",
+                                  marginTop: '-3px',
+                                  marginBottom: '0px',
                                 }}
                                 onClick={(e) => {
                                   e.preventDefault();
@@ -1001,54 +887,40 @@ export default function EditorPage(props) {
                                   removeFromFiles(p);
                                   if (jp === jpath) {
                                     if (files.length > 1) {
-                                      openFile(
-                                        files[idx - 1] || files[idx + 1]
-                                      );
+                                      openFile(files[idx - 1] || files[idx + 1]);
                                     } else {
                                       createFile(Filetype.Widget);
                                     }
                                   }
                                 }}
                               >
-                                <i className="bi bi-x"></i>
+                                <i className='bi bi-x'></i>
                               </button>
                             </Nav.Link>
                           </TopMenu>
                         </Nav.Item>
                       );
                     })}
-                    <Nav.Item
-                      className="me-1"
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
+                    <Nav.Item className='me-1' style={{ display: 'flex', alignItems: 'center' }}>
                       {openCreateButton}
                       {renameButton}
                     </Nav.Item>
                   </Nav>
                 </div>
-                <div
-                  className="d-flex ms-auto"
-                  style={{ minWidth: "280px", flexWrap: "wrap" }}
-                >
-                  <Nav
-                    variant="pills mb-2 mt-2 ms-auto"
-                    activeKey={jpath}
-                    onSelect={(key) => openFile(JSON.parse(key))}
-                  >
-                    <Nav.Item className="">
+                <div className='d-flex ms-auto' style={{ minWidth: '280px', flexWrap: 'wrap' }}>
+                  <Nav variant='pills mb-2 mt-2 ms-auto' activeKey={jpath} onSelect={(key) => openFile(JSON.parse(key))}>
+                    <Nav.Item className=''>
                       {saveDraftButton}
                       {forkButton}
 
-                      {filesDetails.get(widgetName)?.isDraft
-                        ? publishDraftAsMainButton
-                        : publishButton}
+                      {filesDetails.get(widgetName)?.isDraft ? publishDraftAsMainButton : publishButton}
                     </Nav.Item>
                   </Nav>
                 </div>
               </div>
 
               {props.widgets.editorComponentSearch && (
-                <div style={{ margin: "10px 0 20px 0" }}>
+                <div style={{ margin: '10px 0 20px 0' }}>
                   {/* We use the component search widget as a VM entry point to add a TOS check wrapper.
                   It does not need to be this component, just some <Widget /> on the page */}
                   <Widget
@@ -1059,29 +931,18 @@ export default function EditorPage(props) {
                       targetComponent: props.widgets.editorComponentSearch,
                       targetProps: useMemo(
                         () => ({
-                          extraButtons: ({
-                            widgetName,
-                            widgetPath,
-                            onHide,
-                          }) => (
-                            <OverlayTrigger
-                              placement="auto"
-                              overlay={
-                                <Tooltip>
-                                  Open "{widgetName}" component in the editor
-                                </Tooltip>
-                              }
-                            >
+                          extraButtons: ({ widgetName, widgetPath, onHide }) => (
+                            <OverlayTrigger placement='auto' overlay={<Tooltip>Open "{widgetName}" component in the editor</Tooltip>}>
                               <div
                                 style={{
-                                  display: "flex",
-                                  alignItems: "center",
+                                  display: 'flex',
+                                  alignItems: 'center',
                                 }}
                               >
                                 {OpenButtonIcon}
 
                                 <button
-                                  className="btn btn-white-primary"
+                                  className='btn btn-white-primary'
                                   onClick={(e) => {
                                     e.preventDefault();
                                     loadFile(widgetPath);
@@ -1101,54 +962,46 @@ export default function EditorPage(props) {
                 </div>
               )}
             </div>
-            <div className="d-flex align-content-start">
-              <div className="flex-grow-1">
-                <div className="row">
+            <div className='d-flex align-content-start'>
+              <div className='flex-grow-1'>
+                <div className='row'>
                   <div className={layoutClass}>
                     <div
                       style={{
-                        display: "flex",
+                        display: 'flex',
                       }}
                     >
                       <div>
                         <ul
                           className={`nav nav-tabs`}
                           style={{
-                            borderBottom: "0px",
-                            marginTop: "9px",
+                            borderBottom: '0px',
+                            marginTop: '9px',
                           }}
                         >
-                          <li className="nav-item">
+                          <li className='nav-item'>
                             <button
-                              className={`nav-link ${
-                                tab === Tab.Editor ? "active" : "text-secondary"
-                              }`}
-                              aria-current="page"
+                              className={`nav-link ${tab === Tab.Editor ? 'active' : 'text-secondary'}`}
+                              aria-current='page'
                               onClick={() => setTab(Tab.Editor)}
                             >
                               Component
                             </button>
                           </li>
-                          <li className="nav-item">
+                          <li className='nav-item'>
                             <button
-                              className={`nav-link ${
-                                tab === Tab.Props ? "active" : "text-secondary"
-                              }`}
-                              aria-current="page"
+                              className={`nav-link ${tab === Tab.Props ? 'active' : 'text-secondary'}`}
+                              aria-current='page'
                               onClick={() => setTab(Tab.Props)}
                             >
                               Props
                             </button>
                           </li>
                           {props.widgets.widgetMetadataEditor && (
-                            <li className="nav-item">
+                            <li className='nav-item'>
                               <button
-                                className={`nav-link ${
-                                  tab === Tab.Metadata
-                                    ? "active"
-                                    : "text-secondary"
-                                }`}
-                                aria-current="page"
+                                className={`nav-link ${tab === Tab.Metadata ? 'active' : 'text-secondary'}`}
+                                aria-current='page'
                                 onClick={() => setTab(Tab.Metadata)}
                               >
                                 Metadata
@@ -1156,14 +1009,10 @@ export default function EditorPage(props) {
                             </li>
                           )}
                           {layout === Layout.Tabs && (
-                            <li className="nav-item">
+                            <li className='nav-item'>
                               <button
-                                className={`nav-link ${
-                                  tab === Tab.Widget
-                                    ? "active"
-                                    : "text-secondary"
-                                }`}
-                                aria-current="page"
+                                className={`nav-link ${tab === Tab.Widget ? 'active' : 'text-secondary'}`}
+                                aria-current='page'
                                 onClick={() => {
                                   setRenderCode(code);
                                   setTab(Tab.Widget);
@@ -1176,133 +1025,108 @@ export default function EditorPage(props) {
                         </ul>
                       </div>
                       {layout === Layout.Tabs && (
-                        <div className="ms-auto d-flex button-c">
+                        <div className='ms-auto d-flex button-c'>
                           {path && accountId && openInNewTabButton}
                           <div
-                            className="btn-group"
-                            role="group"
-                            aria-label="Layout selection"
+                            className='btn-group'
+                            role='group'
+                            aria-label='Layout selection'
                             style={{
-                              height: "38px",
+                              height: '38px',
                             }}
                           >
                             <input
-                              type="radio"
-                              className="btn-check"
-                              name="layout-radio"
-                              id="layout-tabs"
-                              autoComplete="off"
+                              type='radio'
+                              className='btn-check'
+                              name='layout-radio'
+                              id='layout-tabs'
+                              autoComplete='off'
                               checked={layout === Layout.Tabs}
                               onChange={onLayoutChange}
                               value={Layout.Tabs}
-                              title={"Set layout to Tabs mode"}
+                              title={'Set layout to Tabs mode'}
                             />
-                            <label
-                              className="btn btn-outline-secondary"
-                              htmlFor="layout-tabs"
-                            >
-                              <i className="bi bi-square" />
+                            <label className='btn btn-outline-secondary' htmlFor='layout-tabs'>
+                              <i className='bi bi-square' />
                             </label>
                             <input
-                              type="radio"
-                              className="btn-check"
-                              name="layout-radio"
-                              id="layout-split"
-                              autoComplete="off"
+                              type='radio'
+                              className='btn-check'
+                              name='layout-radio'
+                              id='layout-split'
+                              autoComplete='off'
                               checked={layout === Layout.Split}
                               value={Layout.Split}
-                              title={"Set layout to Split mode"}
+                              title={'Set layout to Split mode'}
                               onChange={onLayoutChange}
                             />
-                            <label
-                              className="btn btn-outline-secondary"
-                              htmlFor="layout-split"
-                            >
-                              <i className="bi bi-layout-split" />
+                            <label className='btn btn-outline-secondary' htmlFor='layout-split'>
+                              <i className='bi bi-layout-split' />
                             </label>
                           </div>
                         </div>
                       )}
                     </div>
 
-                    <div
-                      className={`${
-                        tab === Tab.Editor ? "" : "visually-hidden"
-                      }`}
-                    >
+                    <div className={`${tab === Tab.Editor ? '' : 'visually-hidden'}`}>
                       <div
-                        className="form-control mb-3"
+                        className='form-control mb-3'
                         style={{
-                          height: "70vh",
-                          padding: "0px",
-                          border: "1px solid rgba(255, 255, 255, 0.3)",
-                          borderRadius: "12px",
-                          borderTopLeftRadius: "0px",
-                          overflow: "hidden",
+                          height: '70vh',
+                          padding: '0px',
+                          border: '1px solid rgba(255, 255, 255, 0.3)',
+                          borderRadius: '12px',
+                          borderTopLeftRadius: '0px',
+                          overflow: 'hidden',
                         }}
                       >
                         <Editor
                           value={code}
                           path={widgetPath}
-                          defaultLanguage="javascript"
-                          theme="vs-dark"
+                          defaultLanguage='javascript'
+                          theme='vs-dark'
                           onChange={(code) => updateCode(path, code)}
                           wrapperProps={{
                             onBlur: () => reformat(path, code),
                           }}
                         />
                       </div>
-                      <div className="mb-3 d-flex gap-2 flex-wrap"></div>
+                      <div className='mb-3 d-flex gap-2 flex-wrap'></div>
                     </div>
-                    <div
-                      className={`${
-                        tab === Tab.Props ? "" : "visually-hidden"
-                      }`}
-                    >
+                    <div className={`${tab === Tab.Props ? '' : 'visually-hidden'}`}>
                       <div
-                        className="form-control"
+                        className='form-control'
                         style={{
-                          height: "70vh",
-                          padding: "0px",
-                          border: "1px solid rgba(255, 255, 255, 0.3)",
-                          borderRadius: "12px",
-                          overflow: "hidden",
+                          height: '70vh',
+                          padding: '0px',
+                          border: '1px solid rgba(255, 255, 255, 0.3)',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
                         }}
                       >
                         <Editor
                           value={widgetProps}
-                          defaultLanguage="json"
-                          theme="vs-dark"
+                          defaultLanguage='json'
+                          theme='vs-dark'
                           onChange={(props) => setWidgetProps(props)}
                           wrapperProps={{
                             onBlur: () => reformatProps(widgetProps),
                           }}
                         />
                       </div>
-                      <div className=" mb-3">
-                        ^^ Props for debugging (in JSON)
-                      </div>
-                      {propsError && (
-                        <pre className="alert alert-danger">{propsError}</pre>
-                      )}
+                      <div className=' mb-3'>^^ Props for debugging (in JSON)</div>
+                      {propsError && <pre className='alert alert-danger'>{propsError}</pre>}
                     </div>
-                    <div
-                      className={`${
-                        tab === Tab.Metadata &&
-                        props.widgets.widgetMetadataEditor
-                          ? ""
-                          : "visually-hidden"
-                      }`}
-                    >
+                    <div className={`${tab === Tab.Metadata && props.widgets.widgetMetadataEditor ? '' : 'visually-hidden'}`}>
                       <div
-                        className="mb-3"
+                        className='mb-3'
                         style={{
-                          paddingTop: "20px",
-                          padding: "20px",
-                          border: "1px solid rgb(255, 255, 255, 0.3)",
-                          appearance: "none",
-                          borderRadius: "12px",
-                          minHeight: "70vh",
+                          paddingTop: '20px',
+                          padding: '20px',
+                          border: '1px solid rgb(255, 255, 255, 0.3)',
+                          appearance: 'none',
+                          borderRadius: '12px',
+                          minHeight: '70vh',
                         }}
                       >
                         <Widget
@@ -1310,11 +1134,7 @@ export default function EditorPage(props) {
                           key={`metadata-editor-${jpath}`}
                           props={useMemo(() => {
                             return {
-                              widgetPath:
-                                widgetPath +
-                                (filesDetails.get(widgetName)?.isDraft
-                                  ? "/branch/draft"
-                                  : ""),
+                              widgetPath: widgetPath + (filesDetails.get(widgetName)?.isDraft ? '/branch/draft' : ''),
                               onChange: setMetadata,
                             };
                           }, [widgetPath])}
@@ -1322,71 +1142,50 @@ export default function EditorPage(props) {
                       </div>
                     </div>
                   </div>
-                  <div
-                    className={`${
-                      tab === Tab.Widget ||
-                      (layout === Layout.Split && tab !== Tab.Metadata)
-                        ? layoutClass
-                        : "visually-hidden"
-                    }`}
-                  >
+                  <div className={`${tab === Tab.Widget || (layout === Layout.Split && tab !== Tab.Metadata) ? layoutClass : 'visually-hidden'}`}>
                     <div style={{}}>
                       {tab === Tab.Widget || (
                         <div
                           style={{
-                            height: "38px",
-                            display: "flex",
-                            marginBottom: "12px",
-                            justifyContent: "end",
+                            height: '38px',
+                            display: 'flex',
+                            marginBottom: '12px',
+                            justifyContent: 'end',
                           }}
                         >
                           {tab === Tab.Widget || (
                             <>
-                              {renderCode && (
-                                <div className="d-flex justify-content-end me-2">
-                                  {renderPreviewButton}
-                                </div>
-                              )}
+                              {renderCode && <div className='d-flex justify-content-end me-2'>{renderPreviewButton}</div>}
                               {path && accountId && openInNewTabButton}
-                              <div
-                                className="btn-group"
-                                role="group"
-                                aria-label="Layout selection"
-                              >
+                              <div className='btn-group' role='group' aria-label='Layout selection'>
                                 <input
-                                  type="radio"
-                                  className="btn-check"
-                                  name="layout-radio"
-                                  id="layout-tabs"
-                                  autoComplete="off"
+                                  type='radio'
+                                  className='btn-check'
+                                  name='layout-radio'
+                                  id='layout-tabs'
+                                  autoComplete='off'
                                   checked={layout === Layout.Tabs}
                                   onChange={onLayoutChange}
                                   value={Layout.Tabs}
-                                  title={"Set layout to Tabs mode"}
+                                  title={'Set layout to Tabs mode'}
                                 />
-                                <label
-                                  className="btn btn-outline-secondary"
-                                  htmlFor="layout-tabs"
-                                >
-                                  <i className="bi bi-square" />
+                                <label className='btn btn-outline-secondary' htmlFor='layout-tabs'>
+                                  <i className='bi bi-square' />
                                 </label>
 
                                 <input
-                                  type="radio"
-                                  className="btn-check"
-                                  name="layout-radio"
-                                  id="layout-split"
-                                  autoComplete="off"
+                                  type='radio'
+                                  className='btn-check'
+                                  name='layout-radio'
+                                  id='layout-split'
+                                  autoComplete='off'
                                   checked={layout === Layout.Split}
                                   value={Layout.Split}
-                                  title={"Set layout to Split mode"}
+                                  title={'Set layout to Split mode'}
                                   onChange={onLayoutChange}
                                 />
-                                <label
-                                  className="btn btn-outline-secondary"
-                                  htmlFor="layout-split"
-                                >
-                                  <i className="bi bi-layout-split" />
+                                <label className='btn btn-outline-secondary' htmlFor='layout-split'>
+                                  <i className='bi bi-layout-split' />
                                 </label>
                               </div>
                             </>
@@ -1394,28 +1193,28 @@ export default function EditorPage(props) {
                         </div>
                       )}
                       <div
-                        className="container"
+                        className='container'
                         style={
                           tab === Tab.Widget
                             ? {
-                                border: "1px solid rgba(255, 255, 255, 0.3)",
-                                appearance: "none",
-                                borderRadius: "12px",
-                                height: "70vh",
-                                maxWidth: "100%",
-                                padding: "20px",
+                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                appearance: 'none',
+                                borderRadius: '12px',
+                                height: '70vh',
+                                maxWidth: '100%',
+                                padding: '20px',
                               }
                             : {
-                                padding: "20px",
-                                border: "1px solid rgba(255, 255, 255, 0.3)",
-                                appearance: "none",
-                                borderRadius: "12px",
-                                height: "70vh",
+                                padding: '20px',
+                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                appearance: 'none',
+                                borderRadius: '12px',
+                                height: '70vh',
                               }
                         }
                       >
-                        <div className="h-100 row">
-                          <div className="d-inline-block position-relative overflow-auto h-100">
+                        <div className='h-100 row'>
+                          <div className='d-inline-block position-relative overflow-auto h-100'>
                             {renderCode ? (
                               <div
                                 style={{
@@ -1423,20 +1222,16 @@ export default function EditorPage(props) {
                                   margin: 0,
                                 }}
                               >
-                                <Widget
-                                  key={`preview-${jpath}`}
-                                  code={renderCode}
-                                  props={parsedWidgetProps}
-                                />
+                                <Widget key={`preview-${jpath}`} code={renderCode} props={parsedWidgetProps} />
                               </div>
                             ) : (
                               <div
                                 style={{
                                   padding: 0,
                                   margin: 0,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
                                 }}
                               >
                                 {renderPreviewButton}
@@ -1447,21 +1242,14 @@ export default function EditorPage(props) {
                       </div>
                     </div>
                   </div>
-                  <div
-                    className={`${
-                      tab === Tab.Metadata ? layoutClass : "visually-hidden"
-                    }`}
-                  >
-                    <div className="container" style={{ marginTop: "50px" }}>
-                      <div className="row">
-                        <div className="d-inline-block position-relative overflow-hidden">
+                  <div className={`${tab === Tab.Metadata ? layoutClass : 'visually-hidden'}`}>
+                    <div className='container' style={{ marginTop: '50px' }}>
+                      <div className='row'>
+                        <div className='d-inline-block position-relative overflow-hidden'>
                           <Widget
                             key={`metadata-${jpath}`}
                             src={props.widgets.widgetMetadata}
-                            props={useMemo(
-                              () => ({ metadata, accountId }),
-                              [metadata, accountId]
-                            )}
+                            props={useMemo(() => ({ metadata, accountId }), [metadata, accountId])}
                           />
                         </div>
                       </div>
