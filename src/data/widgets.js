@@ -80,7 +80,7 @@ const MainnetWidgets = {
   peoplePage: 'near/widget/PeoplePage',
   notificationButton: 'ref-admin.near/widget/NotificationButton',
   profilePage: 'ref-admin.near/widget/ProfilePage',
-  componentSummary: 'ref-admin.near/widget/ComponentSummary',
+  componentSummary: 'near/widget/ComponentSummary',
   notificationsPage: 'ref-admin.near/widget/NotificationsPage',
   tosCheck: 'ref-admin.near/widget/TosCheck',
   tosContent: 'adminalpha.near/widget/TosContent',
