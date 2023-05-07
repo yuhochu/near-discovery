@@ -1,21 +1,24 @@
-import { ShanShanLogo } from '../icons/Logo';
-import { DiscoverDropdownMenu, NavDropdownMenu } from './nav_dropdown/NavDropdownMenu';
-import { NavDropdownButton } from './NavDropdownButton';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Widget, useNear, useAccount, useCache } from 'near-social-vm';
-import React, { useState } from 'react';
+import { ShanShanLogo } from "../icons/Logo";
+import {
+  DiscoverDropdownMenu,
+  NavDropdownMenu,
+} from "./nav_dropdown/NavDropdownMenu";
+import { NavDropdownButton } from "./NavDropdownButton";
+import { useHistory, useLocation } from "react-router-dom";
+import { Widget, useNear, useAccount, useCache } from "near-social-vm";
+import React, { useState } from "react";
 
-import { Link } from 'react-router-dom';
-import { Logo } from '../icons/Logo';
-import { NavDropdownButton } from './NavDropdownButton';
-import { NavigationButton } from '../NavigationButton';
-import { NotificationWidget } from '../NotificationWidget';
-import { Return } from '../icons/Return';
-import { SignInButton } from '../SignInButton';
-import { UserDropdown } from './UserDropdown';
-import image from '../icons/search.svg';
-import styled from 'styled-components';
-import { recordEvent } from '../../../../../utils/analytics';
+import { Link } from "react-router-dom";
+import { Logo } from "../icons/Logo";
+import { NavDropdownButton } from "./NavDropdownButton";
+import { NavigationButton } from "../NavigationButton";
+import { NotificationWidget } from "../NotificationWidget";
+import { Return } from "../icons/Return";
+import { SignInButton } from "../SignInButton";
+import { UserDropdown } from "./UserDropdown";
+import image from "../icons/search.svg";
+import styled from "styled-components";
+import { recordEvent } from "../../../../../utils/analytics";
 
 const StyledNavigation = styled.div`
   position: sticky;
@@ -135,33 +138,35 @@ export function DesktopNavigation(props) {
 
   return (
     <StyledNavigation onMouseLeave={() => setMenuDropdown(false)}>
-      <div className='container'>
+      <div className="container">
         <ShanShanLogo />
-        <div className='form-wrapper'>
+        <div className="form-wrapper">
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              history.push(`/${props.widgets?.search.indexPage}?term=${e.target[0].value}`);
+              history.push(
+                `/${props.widgets?.search.indexPage}?term=${e.target[0].value}`
+              );
             }}
           >
             <input
-              placeholder='Search'
+              placeholder="Search"
               style={{ backgroundImage: `url(${image})` }}
               onFocus={() => {
                 setSearchInputFocus(true);
-                recordEvent('click-navigation-search');
+                recordEvent("click-navigation-search");
               }}
               onBlur={() => setSearchInputFocus(false)}
             />
           </form>
           {searchInputFocus && <Return />}
         </div>
-        <div className='navigation-section'>
+        <div className="navigation-section">
           <NavigationButton
             onMouseEnter={() => {
               setMenuDropdown(false);
             }}
-            route='/'
+            route="/"
           >
             Home
           </NavigationButton>
@@ -177,36 +182,66 @@ export function DesktopNavigation(props) {
               setDiscoverDropdown(false);
             }}
             style={{
-              color: location.pathname.includes(`/${props.widgets?.componentsPage}`) ? 'white' : '',
+              color: location.pathname.includes(
+                `/${props.widgets?.componentsPage}`
+              )
+                ? "white"
+                : "",
             }}
           >
             Discover
-            <DiscoverDropdownMenu {...props} menuDropdown={discoverDropdown} onClickLink={() => setDiscoverDropdown(false)} />
+            <DiscoverDropdownMenu
+              {...props}
+              menuDropdown={discoverDropdown}
+              onClickLink={() => setDiscoverDropdown(false)}
+            />
           </NavDropdownButton>
 
           <Widget
-            src='ref-admin.near/widget/wrap-code'
+            src="ref-admin.near/widget/wrap-code"
             props={{
-              code: <NavDropdownButton onMouseEnter={() => setMenuDropdown('develop')}>Develop</NavDropdownButton>,
+              code: (
+                <NavDropdownButton
+                  onMouseEnter={() => setMenuDropdown("develop")}
+                >
+                  Develop
+                </NavDropdownButton>
+              ),
             }}
           ></Widget>
         </div>
-        <div className='user-section'>
+        <div className="user-section">
           {!props.signedIn && (
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <SignInButton onSignIn={() => history.push('/signup')}> Sign Up</SignInButton>
-              <SignInButton onSignIn={() => props.requestSignIn()}> Sign In</SignInButton>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <SignInButton onSignIn={() => history.push("/signup")}>
+                {" "}
+                Sign Up
+              </SignInButton>
+              <SignInButton onSignIn={() => props.requestSignIn()}>
+                {" "}
+                Sign In
+              </SignInButton>
             </div>
           )}
           {props.signedIn && (
             <>
-              <NotificationWidget notificationButtonSrc={props.widgets.notificationButton} onMouseEnter={() => setMenuDropdown(false)} />
-              <UserDropdown {...props} onMouseEnter={() => setMenuDropdown(false)} />
+              <NotificationWidget
+                notificationButtonSrc={props.widgets.notificationButton}
+                onMouseEnter={() => setMenuDropdown(false)}
+              />
+              <UserDropdown
+                {...props}
+                onMouseEnter={() => setMenuDropdown(false)}
+              />
             </>
           )}
         </div>
       </div>
-      <NavDropdownMenu {...props} menuDropdown={menuDropdown} onClickLink={() => setMenuDropdown(false)} />
+      <NavDropdownMenu
+        {...props}
+        menuDropdown={menuDropdown}
+        onClickLink={() => setMenuDropdown(false)}
+      />
     </StyledNavigation>
   );
 }

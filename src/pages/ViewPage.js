@@ -15,7 +15,7 @@ export default function ViewPage(props) {
   const { widgetSrc } = useParams();
   const query = useQuery();
 
-  const list_tab = query.get('tab');
+  const list_tab = query.get("tab");
 
   const [widgetProps, setWidgetProps] = useState({});
 
@@ -49,9 +49,9 @@ export default function ViewPage(props) {
     setTimeout(() => {
       recordPageView(src);
       setWidgetSrc(
-        src === viewSourceWidget && query.get('src')
+        src === viewSourceWidget && query.get("src")
           ? {
-              edit: query.get('src'),
+              edit: query.get("src"),
               view: null,
             }
           : {
