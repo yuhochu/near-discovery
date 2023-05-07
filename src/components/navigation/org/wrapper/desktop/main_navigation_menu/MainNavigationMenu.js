@@ -32,7 +32,14 @@ const MainNavigationMenu = (props) => {
             setDiscoverDropdown(false);
           }}
         >
-          <NavigationMenu.Trigger className='NavigationMenuTrigger'>Discover</NavigationMenu.Trigger>
+          <NavigationMenu.Trigger
+            style={{
+              color: location.pathname.includes('components') ? 'white' : '',
+            }}
+            className='NavigationMenuTrigger'
+          >
+            Discover
+          </NavigationMenu.Trigger>
 
           <DiscoverDropdownMenu {...props} menuDropdown={discoverDropdown} onClickLink={() => setDiscoverDropdown(false)}></DiscoverDropdownMenu>
         </NavigationMenu.Item>
