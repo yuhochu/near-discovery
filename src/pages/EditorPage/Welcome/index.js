@@ -55,7 +55,7 @@ const Tag = styled.div`
 `;
 
 const Desc = styled.div`
-  color:#fff;
+  color: #fff;
   margin-top: 10px;
 `;
 

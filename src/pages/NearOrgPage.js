@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Widget } from 'near-social-vm';
-import NavigationWrapper from '../components/navigation/org/NavigationWrapper';
-import IframeResizer from 'iframe-resizer-react';
-import { useHashUrlBackwardsCompatibility } from '../hooks/useHashUrlBackwardsCompatibility';
-import { Helmet } from 'react-helmet';
-import { recordPageView, recordClick } from '../utils/analytics';
-import { useQuery } from '../hooks/useQuery';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Widget } from "near-social-vm";
+import NavigationWrapper from "../components/navigation/org/NavigationWrapper";
+import IframeResizer from "iframe-resizer-react";
+import { useHashUrlBackwardsCompatibility } from "../hooks/useHashUrlBackwardsCompatibility";
+import { Helmet } from "react-helmet";
+import { recordPageView, recordClick } from "../utils/analytics";
+import { useQuery } from "../hooks/useQuery";
+import { useParams } from "react-router-dom";
 
 export default function NearOrgPage(props) {
   // will always be empty in prod
@@ -17,7 +17,7 @@ export default function NearOrgPage(props) {
   const { subpath } = useParams();
 
   useHashUrlBackwardsCompatibility();
-  zE('webWidget', 'hide');
+  zE("webWidget", "hide");
 
   // fetch local component versions if a local loader
   // is provided. must be provided as {components: { <path>: { code : <code>}}}
@@ -25,9 +25,9 @@ export default function NearOrgPage(props) {
     if (!localOverrideUrl) return;
 
     const res = await fetch(localOverrideUrl, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     });
     const data = await res.json();
@@ -55,18 +55,22 @@ export default function NearOrgPage(props) {
       {props.meta && (
         <Helmet>
           <title>{props.meta.title}</title>
-          <meta property='og:title' content={props.meta.title} />
-          <meta name='description' content={props.meta.description} />
-          <meta property='og:description' content={props.meta.description} />
+          <meta property="og:title" content={props.meta.title} />
+          <meta name="description" content={props.meta.description} />
+          <meta property="og:description" content={props.meta.description} />
         </Helmet>
       )}
       <NavigationWrapper {...props} />
 
       <div onPointerUp={recordClick}>
         {props.iframeSrc ? (
-          <IframeResizer src={props.iframeSrc + (subpath ? '/' + subpath : '')} style={{ width: '1px', minWidth: '100%' }} checkOrigin={false} />
+          <IframeResizer
+            src={props.iframeSrc + (subpath ? "/" + subpath : "")}
+            style={{ width: "1px", minWidth: "100%" }}
+            checkOrigin={false}
+          />
         ) : (
-          <div className='container-xl'>
+          <div className="container-xl">
             {(!localOverrideUrl || redirectMap) && (
               <Widget
                 config={{ redirectMap }}
