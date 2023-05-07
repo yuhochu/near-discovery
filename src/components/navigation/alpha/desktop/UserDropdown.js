@@ -1,4 +1,4 @@
-import React, { useCallback, useState,  useEffect} from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
 import { User } from "../../../icons/User";
 import { LogOut } from "../../../icons/LogOut";
@@ -23,10 +23,10 @@ const StyledDropdown = styled.div`
     outline: none;
     border: 0;
     padding: 6px;
-    .d-inline-block{
+    .d-inline-block {
       width: auto !important;
       height: auto !important;
-      margin-left:8px;
+      margin-left: 8px;
     }
     &:after {
       margin: 0 14px;
@@ -143,8 +143,8 @@ export function UserDropdown(props) {
           aria-labelledby="dropdownMenu2222"
           style={{ minWidth: "fit-content" }}
         >
-          <li style={{marginBottom: '10px'}}>
-           <Widget src={props.widgets.userBuilder} />
+          <li style={{ marginBottom: "10px" }}>
+            <Widget src={props.widgets.userBuilder} />
           </li>
           <li>
             <NavLink

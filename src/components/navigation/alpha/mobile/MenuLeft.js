@@ -206,14 +206,18 @@ export function MenuLeft(props) {
             <div className="profile-username">{props.signedAccountId}</div>
           </Link>
         ) : (
-          <div style={{ display: 'flex', gap: '16px' }}>
+          <div style={{ display: "flex", gap: "16px" }}>
             <SignInButton
               onSignIn={() => {
                 props.onCloseMenu();
                 props.requestSignIn();
               }}
-            >Sign In</SignInButton>
-            <SignInButton onSignIn={() => history.push('/signup')}>Sign up</SignInButton>
+            >
+              Sign In
+            </SignInButton>
+            <SignInButton onSignIn={() => history.push("/signup")}>
+              Sign up
+            </SignInButton>
           </div>
         )}
         <div className="links-title">Discover</div>
@@ -268,6 +272,6 @@ export function MenuLeft(props) {
         </ul>
       </div>
       <div className="right-side" onClick={props.onCloseMenu} />
-    </StyledMenu >
+    </StyledMenu>
   );
 }

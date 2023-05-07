@@ -9,7 +9,7 @@ const StyledNotificationWidget = styled.div`
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  cursor:pointer;
+  cursor: pointer;
 
   > div,
   a {

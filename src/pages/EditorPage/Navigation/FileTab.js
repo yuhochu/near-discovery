@@ -10,27 +10,26 @@ const TopMenu = styled.div`
   margin: 0 8px 8px 0;
 
   &&& > a {
-    border: 1px solid #e5e5e5;
-    background: #fff;
-    color: #11181c;
+    background: transparent;
+    color: #fff;
     padding-left: 6px;
     padding-right: 6px;
-
+    border-radius: 0;
+    height: 52px;
     .close {
       opacity: 0;
     }
   }
 
   &&& > a:hover {
-    border: 1px solid #6c757d;
-
     .close {
       opacity: 1;
     }
   }
   &&& > a.active {
-    border: 1px solid #6c757d;
-
+    .tab {
+      border-bottom: 4px solid rgb(0, 255, 209);
+    }
     .close {
       opacity: 1;
     }
@@ -81,7 +80,7 @@ export default ({ file, closeFile, disable }) => {
         <Nav.Item>
           <TopMenu>
             <Nav.Link className="text-decoration-none d-flex" eventKey={jpath}>
-              <div className="d-flex">
+              <div className="d-flex tab">
                 <div className={`dot ${dotRed ? `dot-red` : ``}`}></div>
                 <div>{widgetName}</div>
                 {file.isDraft && <div className="draft">Draft</div>}

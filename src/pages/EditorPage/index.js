@@ -652,7 +652,7 @@ const EditorPage = ({
               />
             )}
             <div className={showEditor ? `` : ``}>
-              {onboarding || <VsCodeBanner />}
+              {/* {onboarding || <VsCodeBanner />} */}
               {onboarding && (
                 <BannerOboarding handleExitOnboarding={handleExitOnboarding} />
               )}

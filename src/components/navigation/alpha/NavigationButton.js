@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink , useLocation} from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const StyledNavigationButton = styled.div`
   a {
@@ -35,7 +35,7 @@ export function NavigationButton(props) {
     >
       {props.route ? (
         <NavLink
-          className={`${isActive ? 'active': ''}`}
+          className={`${isActive ? "active" : ""}`}
           onClick={(e) => {
             if (props.disabled) {
               e.preventDefault();

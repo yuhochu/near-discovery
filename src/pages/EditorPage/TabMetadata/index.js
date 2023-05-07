@@ -15,10 +15,10 @@ const TabMetadata = ({ tab, widgets, jpath, widgetPath, setMetadata }) => (
       style={{
         paddingTop: "20px",
         padding: "20px",
-        border: "1px solid rgb(206, 212, 218)",
+        border: "1px solid rgba(255, 255, 255, 0.3)",
         appearance: "none",
         borderRadius: "0.375rem",
-        height: "70vh",
+        height: "80vh",
       }}
     >
       <Widget

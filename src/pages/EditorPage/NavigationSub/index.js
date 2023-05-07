@@ -3,7 +3,33 @@ import ls from "local-storage";
 import { EditorLayoutKey, Layout, Tab } from "../utils/const";
 import OpenInNewTabButton from "../buttons/OpenInNewTabButton";
 import RenderPreviewButton from "../buttons/RenderPreviewButton";
-
+import styled from "styled-components";
+const Container = styled.div`
+  display: flex;
+  height: "38px";
+  display: "flex";
+  margin-bottom: "12px";
+  justify-content: "end";
+  .btn-outline-secondary {
+    background: rgba(26, 46, 51, 0.25);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: rgb(255, 255, 255);
+    &:hover {
+      background: rgba(26, 46, 51, 0.5);
+      border: 0.5px solid rgba(255, 255, 255, 0.3);
+    }
+  }
+  .btn-outline-success {
+    background: rgba(48, 67, 82, 0.9);
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    &:hover {
+      background: rgba(48, 67, 82, 1);
+    }
+  }
+`;
 const NavigationSub = ({
   layout,
   path,
@@ -30,16 +56,16 @@ const NavigationSub = ({
   };
 
   return (
-    <>
-      <div
-        className="ms-auto d-flex"
-        style={{
-          height: "38px",
-          display: "flex",
-          marginBottom: "12px",
-          justifyContent: "end",
-        }}
-      >
+    <div
+      className="ms-auto"
+      style={{
+        height: "38px",
+        display: "flex",
+        marginBottom: "12px",
+        justifyContent: "end",
+      }}
+    >
+      <Container>
         {(Tab.Widget === tab || layout === Layout.Split) && (
           <div className="d-flex justify-content-end me-2">
             <RenderPreviewButton
@@ -86,8 +112,8 @@ const NavigationSub = ({
             <i className="bi bi-layout-split" />
           </label>
         </div>
-      </div>
-    </>
+      </Container>
+    </div>
   );
 };
 

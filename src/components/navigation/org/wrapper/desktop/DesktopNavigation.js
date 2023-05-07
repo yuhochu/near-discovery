@@ -11,7 +11,7 @@ import { NotificationWidget } from "../../NotificationWidget";
 import UserDropdownMenu from "./UserDropdownMenu";
 import TypeAheadDropdown from "./TypeAheadDropdown";
 import { recordClick, flushEvents } from "../../../../../utils/analytics";
-import { ShanShanLogo } from '../../../alpha/icons/Logo';
+import { ShanShanLogo } from "../../../alpha/icons/Logo";
 
 const StyledNavigation = styled.div`
   z-index: 1000;
@@ -70,7 +70,7 @@ const StyledNavigation = styled.div`
       background-color: rgb(43, 47, 49);
       font-size: 16px;
       margin-left: 30px;
-      color:#fff;
+      color: #fff;
       width: 200px;
 
       :focus {
@@ -196,7 +196,7 @@ const DesktopNavigation = (props) => {
     <StyledNavigation className={`${scrolled ? "border-bottom" : ""}`}>
       <div className="container">
         <Link to="/">
-          <ShanShanLogo/>
+          <ShanShanLogo />
         </Link>
         <div className="form-wrapper">
           <form
@@ -261,7 +261,6 @@ const DesktopNavigation = (props) => {
 
               {/* <NotificationWidget notificationButtonSrc={props.widgets.notificationButton} onMouseEnter={() => setMenuDropdown(false)} />
               <UserDropdown {...props} onMouseEnter={() => setMenuDropdown(false)} /> */}
-
             </>
           )}
         </div>
