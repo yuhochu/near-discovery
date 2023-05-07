@@ -189,7 +189,7 @@ export function DesktopNavigation(props) {
             props={{
               code: <NavDropdownButton onMouseEnter={() => setMenuDropdown('develop')}>Develop</NavDropdownButton>,
             }}
-          ></Widget>
+          />
         </div>
         <div className='user-section'>
           {!props.signedIn && (

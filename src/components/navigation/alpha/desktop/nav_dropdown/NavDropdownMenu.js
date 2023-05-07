@@ -122,19 +122,21 @@ const DiscoverNavDropdownMenu = styled.div`
     visibility: visible;
     opacity: 1;
   }
-  .container {
+  .container-discover {
     background: #183035;
     border-radius: 10px;
     padding: 18px 15px;
     width: 207px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 16px;
     position: relative;
     .discover-nav-item {
       display: flex;
       align-items: center;
       gap: 15px;
+      width: 100%;
       padding: 10px 12px;
       cursor: pointer;
       :hover {
@@ -150,11 +152,11 @@ export function DiscoverDropdownMenu(props) {
 
   return (
     <DiscoverNavDropdownMenu className={props.menuDropdown ? 'show' : ''}>
-      <div className='container'>
+      <div className='container-discover'>
         <div
           className='discover-nav-item'
           onClick={() => {
-            history.push(`/${props.widgets?.componentsPage}?tab=Templates`);
+            history.push(`/components?tab=Templates`);
           }}
         >
           <TemplateIcon></TemplateIcon>
@@ -165,7 +167,7 @@ export function DiscoverDropdownMenu(props) {
         <div
           className='discover-nav-item'
           onClick={() => {
-            history.push(`/${props.widgets?.componentsPage}?tab=Components`);
+            history.push(`/components?tab=Components`);
           }}
         >
           <ComponentIcon></ComponentIcon>
