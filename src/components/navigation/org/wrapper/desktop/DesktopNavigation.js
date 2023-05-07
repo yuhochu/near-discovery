@@ -193,7 +193,7 @@ const DesktopNavigation = (props) => {
   }
 
   return (
-    <StyledNavigation className={`${scrolled ? "border-bottom" : ""}`}>
+    <StyledNavigation className={`${scrolled ? "" : ""}`}>
       <div className="container">
         <Link to="/">
           <ShanShanLogo />

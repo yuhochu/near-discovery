@@ -30,7 +30,7 @@ const ButtonGetStarted = styled.button`
 `;
 
 const Title = styled.h4`
-  color: #1b1b18;
+  color: #fff;
   font-weight: 700;
 
   &.second {
@@ -39,14 +39,14 @@ const Title = styled.h4`
 `;
 
 const Tag = styled.div`
-  border: 1px solid #e3e3e0;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.06);
   height: 32px;
   line-height: 32px;
   padding: 0 12px;
   margin-right: 10px;
-  color: #706f6c;
+  color: #fff;
   font-size: 12px;
 
   img {
@@ -55,6 +55,7 @@ const Tag = styled.div`
 `;
 
 const Desc = styled.div`
+  color:#fff;
   margin-top: 10px;
 `;
 
@@ -76,7 +77,7 @@ const Welcome = ({ setShowModal, createFile, showEditor, setCurrentStep }) => {
   }
 
   return (
-    <div className={`d-flex justify-content-center min-vh-100`}>
+    <div className={`d-flex justify-content-center`}>
       <div
         className="container-fluid mt-5"
         style={{

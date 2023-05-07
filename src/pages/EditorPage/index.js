@@ -651,7 +651,7 @@ const EditorPage = ({
                 setCurrentStep={setCurrentStep}
               />
             )}
-            <div className={showEditor ? `` : ``}>
+            <div className={showEditor ? `` : `d-none`}>
               {/* {onboarding || <VsCodeBanner />} */}
               {onboarding && (
                 <BannerOboarding handleExitOnboarding={handleExitOnboarding} />
