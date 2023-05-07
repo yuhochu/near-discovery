@@ -7,7 +7,23 @@ const TabButton = styled.button`
     isolation: isolate;
   }
 `;
-
+const Container = styled.div`
+  .nav-tabs .nav-link.active,
+  .nav-tabs .nav-item.show .nav-link {
+    color: #fff;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+    border-bottom: none;
+  }
+  .nav-tabs .nav-link:hover,
+  .nav-tabs .nav-link:focus {
+    isolation: isolate;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .nav-item {
+    margin-right: 3px;
+  }
+`;
 const Tabs = ({
   isModule,
   tab,
@@ -17,29 +33,16 @@ const Tabs = ({
   setRenderCode,
   codeVisible,
 }) => (
-  <div style={{ display: "flex" }}>
-    <ul
-      className={`nav nav-tabs`}
-      style={{
-        borderBottom: "0px",
-        marginTop: "9px",
-      }}
-    >
-      {isModule && (
-        <li className="nav-item">
-          <TabButton
-            className={`nav-link ${
-              tab === Tab.Editor ? "active" : "text-secondary"
-            }`}
-            aria-current="page"
-            onClick={() => setTab(Tab.Editor)}
-          >
-            Module
-          </TabButton>
-        </li>
-      )}
-      {isModule || (
-        <>
+  <Container>
+    <div style={{ display: "flex" }}>
+      <ul
+        className={`nav nav-tabs`}
+        style={{
+          borderBottom: "0px",
+          marginTop: "9px",
+        }}
+      >
+        {isModule && (
           <li className="nav-item">
             <TabButton
               className={`nav-link ${
@@ -48,54 +51,69 @@ const Tabs = ({
               aria-current="page"
               onClick={() => setTab(Tab.Editor)}
             >
-              Component
+              Module
             </TabButton>
           </li>
-          <li className="nav-item">
-            <TabButton
-              className={`nav-link ${
-                tab === Tab.Props ? "active" : "text-secondary"
-              }`}
-              aria-current="page"
-              onClick={() => setTab(Tab.Props)}
-            >
-              Props
-            </TabButton>
-          </li>
-          {widgets.widgetMetadataEditor && (
+        )}
+        {isModule || (
+          <>
             <li className="nav-item">
               <TabButton
                 className={`nav-link ${
-                  tab === Tab.Metadata ? "active" : "text-secondary"
+                  tab === Tab.Editor ? "active" : "text-secondary"
                 }`}
                 aria-current="page"
-                onClick={() => setTab(Tab.Metadata)}
+                onClick={() => setTab(Tab.Editor)}
               >
-                Metadata
+                Component
               </TabButton>
             </li>
-          )}
-          {/* remove, and add show preview button on the right column */}
-          {layout === Layout.Tabs && (
             <li className="nav-item">
               <TabButton
                 className={`nav-link ${
-                  tab === Tab.Widget ? "active" : "text-secondary"
+                  tab === Tab.Props ? "active" : "text-secondary"
                 }`}
                 aria-current="page"
-                onClick={() => {
-                  setRenderCode(codeVisible);
-                  setTab(Tab.Widget);
-                }}
+                onClick={() => setTab(Tab.Props)}
               >
-                Component Preview
+                Props
               </TabButton>
             </li>
-          )}
-        </>
-      )}
-    </ul>
-  </div>
+            {widgets.widgetMetadataEditor && (
+              <li className="nav-item">
+                <TabButton
+                  className={`nav-link ${
+                    tab === Tab.Metadata ? "active" : "text-secondary"
+                  }`}
+                  aria-current="page"
+                  onClick={() => setTab(Tab.Metadata)}
+                >
+                  Metadata
+                </TabButton>
+              </li>
+            )}
+            {/* remove, and add show preview button on the right column */}
+            {layout === Layout.Tabs && (
+              <li className="nav-item">
+                <TabButton
+                  className={`nav-link ${
+                    tab === Tab.Widget ? "active" : "text-secondary"
+                  }`}
+                  aria-current="page"
+                  onClick={() => {
+                    setRenderCode(codeVisible);
+                    setTab(Tab.Widget);
+                  }}
+                >
+                  Component Preview
+                </TabButton>
+              </li>
+            )}
+          </>
+        )}
+      </ul>
+    </div>
+  </Container>
 );
 
 export default Tabs;

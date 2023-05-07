@@ -24,7 +24,7 @@ const Preview = ({
         style={
           tab === Tab.Widget
             ? {
-                border: "1px solid #ced4da",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
                 appearance: "none",
                 borderRadius: "0.375rem",
                 height: "70vh",
@@ -33,7 +33,7 @@ const Preview = ({
               }
             : {
                 padding: "20px",
-                border: "1px solid #ced4da",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
                 appearance: "none",
                 borderRadius: "0.375rem",
                 height: "70vh",
