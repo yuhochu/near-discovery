@@ -56,7 +56,6 @@ const StyledCurrentComponent = styled.div`
 
 const CurrentComponent = (props) => {
   if (!props.widgets?.componentSummary || !props.widgetSrc?.view) return;
-
   return (
     <StyledCurrentComponent className="current-component">
       <div className="title">Current Component</div>
@@ -66,6 +65,7 @@ const CurrentComponent = (props) => {
           src: props.widgetSrc.view,
           size: "medium",
           showTags: true,
+          canCustomHome: location.pathname == "/",
         }}
       />
     </StyledCurrentComponent>
