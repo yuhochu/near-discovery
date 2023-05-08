@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import classNames from 'classnames';
+import { useParams } from 'react-router-dom';
 import './styles.css';
 import CurrentComponent from '../../../CurrentComponent';
 import { navLinkData } from '../../../orgLinks';
@@ -12,6 +13,8 @@ const MainNavigationMenu = (props) => {
   const [discoverDropdown, setDiscoverDropdown] = useState(false);
 
   const history = useHistory();
+
+  const { widgetSrc } = useParams();
 
   return (
     <NavigationMenu.Root className='NavigationMenuRoot'>
@@ -41,7 +44,7 @@ const MainNavigationMenu = (props) => {
         >
           <NavigationMenu.Trigger
             style={{
-              color: location.pathname.includes('components') ? 'white' : '',
+              color: location.pathname.includes('components') || !!widgetSrc ? 'white' : '',
             }}
             className='NavigationMenuTrigger'
           >
