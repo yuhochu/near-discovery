@@ -8,13 +8,12 @@ import { recordClick, recordPageView } from '../utils/analytics';
 import { Helmet } from 'react-helmet';
 import useRedirectMap from '../hooks/useRedirectMap';
 
-export default function ViewPage(props) {
+export default function HomePage(props) {
   const [shouldWaitForMap, redirectMap, loaderError, loaderUrl] = useRedirectMap();
 
   const { widgetSrc } = useParams();
+  console.log('widgetSrc: ', widgetSrc);
   const query = useQuery();
-
-  const list_tab = query.get('tab');
 
   const [widgetProps, setWidgetProps] = useState({});
 
@@ -23,12 +22,6 @@ export default function ViewPage(props) {
   const viewSourceWidget = props.widgets.viewSource;
 
   useHashUrlBackwardsCompatibility();
-
-  useEffect(() => {
-    if (list_tab) {
-      setWidgetProps(Object.fromEntries([...query.entries()]));
-    }
-  }, [list_tab]);
 
   useEffect(() => {
     setWidgetProps(Object.fromEntries([...query.entries()]));

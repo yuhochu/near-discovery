@@ -37,6 +37,7 @@ import { useFlags } from './utils/flags';
 import { init as initializeSegment, recordWalletConnect, reset } from './utils/analytics';
 import { setupKeypom } from 'keypom-js';
 import { KEYPOM_OPTIONS } from './utils/keypom-options';
+import HomePage from './pages/HomePage';
 
 const StyledApp = styled.div`
   background: radial-gradient(64.26% 67.04% at 49.31% 0%, #002c35 0%, #101011 100%);
@@ -351,14 +352,10 @@ function App(props) {
           <Switch>
             {/* Near ORG BOS Component Pages: */}
             <Route path={'/'} exact={true}>
-              <NearOrgPage
-                {...passProps}
-                src={Widgets.componentsPage}
-                meta={{
-                  title: 'NEAR | Get Started',
-                  description: 'Set up your NEAR account and start exploring apps built on the Blockchain Operating System and NEAR Protocol.',
-                }}
-              />
+              <>
+                <NavigationWrapper {...passProps} />
+                <HomePage {...passProps} meta={metaProps} />
+              </>
             </Route>
             <Route path={'/use'} exact={true}>
               <NearOrgPage
