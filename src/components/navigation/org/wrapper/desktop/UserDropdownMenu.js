@@ -112,7 +112,13 @@ const UserDropdownMenu = (props) => {
               <i className='ph-duotone ph-bank'></i>
               Withdraw {props.availableStorage.div(1000).toFixed(2)}kb
             </DropdownMenu.Item>
-            <DropdownMenu.Item className='DropdownMenuItem' onClick={() => props.logOut()}>
+            <DropdownMenu.Item
+              className='DropdownMenuItem'
+              onClick={() => {
+                props.logOut();
+                history.push('/');
+              }}
+            >
               <i className='ph-duotone ph-sign-out'></i>
               Sign out
             </DropdownMenu.Item>
