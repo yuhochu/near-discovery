@@ -1,20 +1,21 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Widget } from 'near-social-vm';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '../hooks/useQuery';
-import { useHashUrlBackwardsCompatibility } from '../hooks/useHashUrlBackwardsCompatibility';
-import styleZendesk from '../zendesk';
-import { recordClick, recordPageView } from '../utils/analytics';
-import { Helmet } from 'react-helmet';
-import useRedirectMap from '../hooks/useRedirectMap';
+import React, { useEffect, useState, useCallback } from "react";
+import { Widget } from "near-social-vm";
+import { useParams } from "react-router-dom";
+import { useQuery } from "../hooks/useQuery";
+import { useHashUrlBackwardsCompatibility } from "../hooks/useHashUrlBackwardsCompatibility";
+import styleZendesk from "../zendesk";
+import { recordClick, recordPageView } from "../utils/analytics";
+import { Helmet } from "react-helmet";
+import useRedirectMap from "../hooks/useRedirectMap";
 
 export default function ViewPage(props) {
-  const [shouldWaitForMap, redirectMap, loaderError, loaderUrl] = useRedirectMap();
+  const [shouldWaitForMap, redirectMap, loaderError, loaderUrl] =
+    useRedirectMap();
 
   const { widgetSrc } = useParams();
   const query = useQuery();
 
-  const list_tab = query.get('tab');
+  const list_tab = query.get("tab");
 
   const [widgetProps, setWidgetProps] = useState({});
 
@@ -37,19 +38,19 @@ export default function ViewPage(props) {
   useEffect(() => {
     // Displays the Zendesk widget only if user is signed in and on the home page
     if (!props.signedIn || !!widgetSrc) {
-      zE('webWidget', 'hide');
+      zE("webWidget", "hide");
       return;
     }
-    zE('webWidget', 'show');
+    zE("webWidget", "show");
   }, [props.signedIn, widgetSrc]);
 
   useEffect(() => {
     setTimeout(() => {
       recordPageView(src);
       setWidgetSrc(
-        src === viewSourceWidget && query.get('src')
+        src === viewSourceWidget && query.get("src")
           ? {
-              edit: query.get('src'),
+              edit: query.get("src"),
               view: null,
             }
           : {
@@ -62,9 +63,9 @@ export default function ViewPage(props) {
 
   //once the zendesk widget comes online, style it
   const queueZendeskCheck = useCallback(() => {
-    const zwFrame = document.getElementById('launcher');
-    const zwEmbed = zwFrame?.contentDocument.getElementById('Embed');
-    const zwButton = zwEmbed?.getElementsByTagName('button')[0];
+    const zwFrame = document.getElementById("launcher");
+    const zwEmbed = zwFrame?.contentDocument.getElementById("Embed");
+    const zwButton = zwEmbed?.getElementsByTagName("button")[0];
     if (zwButton) {
       styleZendesk();
       return;
@@ -78,50 +79,54 @@ export default function ViewPage(props) {
     <>
       <Helmet>
         <title>{props.meta.title}</title>
-        <meta name='description' content={props.meta.description} />
-        <meta property='og:title' content={props.meta.title} />
-        <meta property='og:description' content={props.meta.description} />
+        <meta name="description" content={props.meta.description} />
+        <meta property="og:title" content={props.meta.title} />
+        <meta property="og:description" content={props.meta.description} />
       </Helmet>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         }}
         onPointerUp={recordClick}
       >
         {loaderUrl && (
           <div
             style={{
-              backgroundColor: '#FFF2CD',
-              color: '#664D04',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '2rem',
-              columnGap: '8px',
+              backgroundColor: "#FFF2CD",
+              color: "#664D04",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "2rem",
+              columnGap: "8px",
             }}
           >
             <span>Loading components from: {loaderUrl}</span>
             {props.flags?.bosLoaderUrl && (
-              <button className='btn btn-outline' onClick={() => props.setFlags?.({ bosLoaderUrl: null })}>
-                <i className='bi bi-x' />
+              <button
+                className="btn btn-outline"
+                onClick={() => props.setFlags?.({ bosLoaderUrl: null })}
+              >
+                <i className="bi bi-x" />
               </button>
             )}
           </div>
         )}
         {loaderError && (
-          <div style={{ padding: '16px' }}>
-            BOS Loader fetch error, see console logs. CORS errors may be misleading and mean your endpoint cannot be reached
+          <div style={{ padding: "16px" }}>
+            BOS Loader fetch error, see console logs. CORS errors may be
+            misleading and mean your endpoint cannot be reached
           </div>
         )}
-        <div className='container-xl'>
-          <div className='row'>
+        <div className="container-xl">
+          <div className="row">
             <div
-              className='d-inline-block position-relative overflow-hidden'
+              className="d-inline-block position-relative overflow-hidden"
               style={{
-                '--body-top-padding': '24px',
-                paddingTop: 'var(--body-top-padding)',
+                "--body-top-padding": "24px",
+                paddingTop: "var(--body-top-padding)",
               }}
             >
               {(!shouldWaitForMap || redirectMap) && (
