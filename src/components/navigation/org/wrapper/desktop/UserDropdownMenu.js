@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import './UserDropdownMenu.css';
-import { Widget, useNear, useAccount } from 'near-social-vm';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback } from "react";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import "./UserDropdownMenu.css";
+import { Widget, useNear, useAccount } from "near-social-vm";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const StyledDropdown = styled.div`
   background: #183035;
@@ -61,13 +61,15 @@ const UserDropdownMenu = (props) => {
   const history = useHistory();
 
   const withdrawStorage = useCallback(async () => {
-    await near.contract.storage_withdraw({}, undefined, '1');
+    await near.contract.storage_withdraw({}, undefined, "1");
   }, [near]);
 
-  const isBuilderPage = history.location.pathname.includes('ComponentDetailsPage') || history.location.pathname.includes('sandbox');
+  const isBuilderPage =
+    history.location.pathname.includes("ComponentDetailsPage") ||
+    history.location.pathname.includes("sandbox");
 
   const onUser = () => {
-    if (isBuilderPage) history.push('/');
+    if (isBuilderPage) history.push("/");
   };
 
   return (
@@ -79,21 +81,21 @@ const UserDropdownMenu = (props) => {
             src={props.widgets.profileImage}
             props={{
               accountId: account.accountId,
-              className: 'd-inline-block',
+              className: "d-inline-block",
             }}
           />
-          <div className='profile-info'>
-            <div className='profile-name'>
+          <div className="profile-info">
+            <div className="profile-name">
               <Widget src={props.widgets.profileName} />
             </div>
-            <div className='profile-username'>{account.accountId}</div>
+            <div className="profile-username">{account.accountId}</div>
           </div>
-          <i className='ph ph-caret-down'></i>
+          <i className="ph ph-caret-down"></i>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Portal className='hello-there'>
-          <DropdownMenu.Content className='DropdownMenuContent' sideOffset={5}>
-            <DropdownMenu.Item className='DropdownMenuItem'>
+        <DropdownMenu.Portal className="hello-there">
+          <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
+            <DropdownMenu.Item className="DropdownMenuItem">
               <Widget
                 src={props.widgets.userBuilder}
                 props={{
@@ -102,24 +104,31 @@ const UserDropdownMenu = (props) => {
               />
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              className='DropdownMenuItem'
-              onClick={() => history.push(`/${props.widgets?.profilePage}?accountId=${account.accountId}`)}
+              className="DropdownMenuItem"
+              onClick={() =>
+                history.push(
+                  `/${props.widgets?.profilePage}?accountId=${account.accountId}`
+                )
+              }
             >
-              <i className='ph-duotone ph-user'></i>
+              <i className="ph-duotone ph-user"></i>
               Profile
             </DropdownMenu.Item>
-            <DropdownMenu.Item className='DropdownMenuItem' onClick={() => withdrawStorage()}>
-              <i className='ph-duotone ph-bank'></i>
+            <DropdownMenu.Item
+              className="DropdownMenuItem"
+              onClick={() => withdrawStorage()}
+            >
+              <i className="ph-duotone ph-bank"></i>
               Withdraw {props.availableStorage.div(1000).toFixed(2)}kb
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              className='DropdownMenuItem'
+              className="DropdownMenuItem"
               onClick={() => {
                 props.logOut();
-                history.push('/');
+                history.push("/");
               }}
             >
-              <i className='ph-duotone ph-sign-out'></i>
+              <i className="ph-duotone ph-sign-out"></i>
               Sign out
             </DropdownMenu.Item>
           </DropdownMenu.Content>
