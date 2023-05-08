@@ -18,7 +18,7 @@ const TabMetadata = ({ tab, widgets, jpath, widgetPath, setMetadata }) => (
         border: "1px solid rgba(255, 255, 255, 0.3)",
         appearance: "none",
         borderRadius: "0.375rem",
-        height: "80vh",
+        height: "auto",
       }}
     >
       <Widget
