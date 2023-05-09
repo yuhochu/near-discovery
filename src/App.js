@@ -237,8 +237,12 @@ function App(props) {
         selector: setupWalletSelector({
           network: NetworkId,
           modules: [
-            setupNearWallet(),
-            setupMyNearWallet(),
+            setupNearWallet({
+              successUrl: `${window.location.origin}/`,
+            }),
+            setupMyNearWallet({
+              successUrl: `${window.location.origin}/`,
+            }),
             setupSender(),
             setupHereWallet(),
             setupMeteorWallet(),
