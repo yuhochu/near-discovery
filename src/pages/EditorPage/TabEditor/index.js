@@ -30,7 +30,7 @@ const TabEditor = ({
             <div ref={refs.step8}>
               <div
                 className="form-control mb-3"
-                style={{ height: "70vh", borderTopLeftRadius: "0px" }}
+                style={{ height: "70vh", borderTopLeftRadius: "0px", backgroundColor: 'transparent', color:'#ccc' }}
               >
                 <Editor
                   value={codeVisible}

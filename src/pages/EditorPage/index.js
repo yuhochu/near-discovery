@@ -171,7 +171,6 @@ const EditorPage = ({
   const layoutClass = layout === Layout.Split ? "col-lg-6" : "";
 
   useHashUrlBackwardsCompatibility();
-
   useEffect(() => {
     const newFilesObject = { ...filesObject };
 
@@ -651,7 +650,8 @@ const EditorPage = ({
                 setCurrentStep={setCurrentStep}
               />
             )}
-            <div className={showEditor ? `` : `d-none`}>
+            {
+              showEditor ? <div>
               {/* {onboarding || <VsCodeBanner />} */}
               {onboarding && (
                 <BannerOboarding handleExitOnboarding={handleExitOnboarding} />
@@ -772,7 +772,9 @@ const EditorPage = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </div>:null
+            }
+            
           </>
         )}
       </div>

@@ -84,7 +84,7 @@ const Welcome = ({ setShowModal, createFile, showEditor, setCurrentStep }) => {
           width: "500px",
         }}
       >
-        <Title>Follow our getting started guided tutorial</Title>
+        {/* <Title>Follow our getting started guided tutorial</Title>
         <div className="d-flex">
           <Tag>
             <img src={Point1} /> Beginner Friendly
@@ -99,7 +99,7 @@ const Welcome = ({ setShowModal, createFile, showEditor, setCurrentStep }) => {
         </Desc>
         <ButtonGetStarted onClick={handleSandbox}>
           Get Started <img src={Arrow} />
-        </ButtonGetStarted>
+        </ButtonGetStarted> */}
 
         <Title className="second">Welcome to the Component Sandbox!</Title>
         <p className="text-secondary">
