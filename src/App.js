@@ -302,12 +302,13 @@ function App(props) {
       return;
     }
     const wallet = await (await near.selector).wallet();
-    wallet.signOut();
-    near.accountId = null;
-    setSignedIn(false);
-    setSignedAccountId(null);
-    reset();
-    localStorage.removeItem("accountId");
+    wallet.signOut().then(() => {
+      near.accountId = null;
+      setSignedIn(false);
+      setSignedAccountId(null);
+      reset();
+      localStorage.removeItem("accountId");
+    });
   }, [near]);
 
   const refreshAllowance = useCallback(async () => {

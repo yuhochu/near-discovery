@@ -123,8 +123,8 @@ const UserDropdownMenu = (props) => {
             </DropdownMenu.Item>
             <DropdownMenu.Item
               className="DropdownMenuItem"
-              onClick={() => {
-                props.logOut();
+              onClick={async () => {
+                await props.logOut();
                 history.push("/");
               }}
             >
